@@ -1,0 +1,12 @@
+def subprojectDirs = [
+        "core",
+        "gson",
+        "yaml",
+        "example"
+]
+
+subprojectDirs.each {
+    include it
+}
+
+rootProject.name = "SimpleConfig"

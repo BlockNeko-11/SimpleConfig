@@ -1,0 +1,9 @@
+dependencies {
+    implementation project(":core")
+
+    implementation project(":gson")
+    implementation "com.google.code.gson:gson:2.13.1"
+
+    implementation project(":yaml")
+    implementation "org.yaml:snakeyaml:2.4"
+}

@@ -1,0 +1,70 @@
+plugins {
+    id "idea"
+    id "java-library"
+    id "maven-publish"
+}
+
+base {
+    archivesName = rootProject.archives_base_name
+}
+
+allprojects {
+    group = rootProject.maven_group
+    version = rootProject.artifact_version
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    apply plugin: "idea"
+    apply plugin: "java-library"
+    apply plugin: "maven-publish"
+
+    base {
+        archivesName = rootProject.archives_base_name + "-" + project.name
+    }
+
+    dependencies {
+        compileOnly "org.jetbrains:annotations:26.0.2"
+        annotationProcessor(compileOnly("org.projectlombok:lombok:1.18.36"))
+    }
+
+    idea {
+        module {
+            downloadJavadoc = true
+            downloadSources = true
+        }
+    }
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+
+        withSourcesJar()
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = "UTF-8"
+    }
+
+    compileJava.dependsOn clean
+
+    publishing {
+        publications {
+            create("MavenJava", MavenPublication) {
+                from components.java
+                artifactId = rootProject.archives_base_name + "-" + project.name
+            }
+        }
+
+        repositories {
+            mavenLocal()
+            maven {
+                name = "Local"
+                url = rootProject.buildDir.toPath().resolve("repo").toAbsolutePath().toString()
+            }
+        }
+    }
+}
