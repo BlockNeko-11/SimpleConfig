@@ -6,16 +6,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 表示一个拥有别名的字段，用于解析与序列化。
+ * 表示一个忽略配置解析或序列化的字段。
  * @author BlockNeko-11
- * @since 1.0.0
+ * @since 1.0.1
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface Alias {
-    /**
-     * 获取字段别名。
-     * @return 字段别名
-     */
-    String value();
+public @interface Ignore {
 }

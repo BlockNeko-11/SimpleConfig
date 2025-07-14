@@ -2,6 +2,7 @@ package io.github.blockneko11.simpleconfig.impl.manager;
 
 import io.github.blockneko11.simpleconfig.api.Config;
 import io.github.blockneko11.simpleconfig.api.annotation.Alias;
+import io.github.blockneko11.simpleconfig.api.annotation.Ignore;
 import io.github.blockneko11.simpleconfig.api.holder.collection.ListConfigHolder;
 import io.github.blockneko11.simpleconfig.api.holder.collection.MapConfigHolder;
 import io.github.blockneko11.simpleconfig.api.holder.number.LongConfigHolder;
@@ -75,6 +76,10 @@ public class FileConfigManagerImpl<T extends Config> extends AbstractConfigManag
 
         for (Field f : clazz.getFields()) {
             if (!ConfigHolder.class.isAssignableFrom(f.getType())) {
+                continue;
+            }
+
+            if (f.isAnnotationPresent(Ignore.class)) {
                 continue;
             }
 
@@ -156,6 +161,10 @@ public class FileConfigManagerImpl<T extends Config> extends AbstractConfigManag
         Map<String, Object> map = new LinkedHashMap<>();
         for (Field f : clazz.getFields()) {
             if (!ConfigHolder.class.isAssignableFrom(f.getType())) {
+                continue;
+            }
+
+            if (f.isAnnotationPresent(Ignore.class)) {
                 continue;
             }
 
