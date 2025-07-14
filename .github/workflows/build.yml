@@ -56,8 +56,6 @@ jobs:
         with:
           name: "${{ steps.prop_info.outputs.artifact_version }}"
           tag_name: "${{ steps.prop_info.outputs.artifact_version }}"
-          files: |
-            bukkit/build/libs/*.jar
           target_commitish: ${{ github.event.ref }}
           generate_release_notes: true
           token: ${{ secrets.RELEASE_TOKEN }}
