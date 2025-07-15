@@ -16,9 +16,9 @@ public interface ConfigProvider {
     Map<String, Object> parse(String config);
 
     /**
-     * 序列化配置。
+     * 将配置序列化为字符串。
      * @param config 配置
-     * @return 序列化后的配置
+     * @return 序列化后的字符串
      */
     String serialize(Map<String, Object> config);
 }
