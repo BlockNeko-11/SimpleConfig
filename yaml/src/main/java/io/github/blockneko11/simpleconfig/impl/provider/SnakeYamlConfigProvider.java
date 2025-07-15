@@ -1,6 +1,7 @@
 package io.github.blockneko11.simpleconfig.impl.provider;
 
 import io.github.blockneko11.simpleconfig.api.provider.ConfigProvider;
+import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.nodes.Tag;
 
@@ -10,7 +11,11 @@ public class SnakeYamlConfigProvider implements ConfigProvider {
     private final Yaml yaml;
 
     public SnakeYamlConfigProvider() {
-        this(new Yaml());
+        DumperOptions options = new DumperOptions();
+        options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+        options.setDefaultScalarStyle(DumperOptions.ScalarStyle.PLAIN);
+        options.setPrettyFlow(false);
+        this.yaml = new Yaml(options);
     }
 
     public SnakeYamlConfigProvider(Yaml yaml) {

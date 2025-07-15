@@ -2,6 +2,7 @@ package example;
 
 import example.model.PlayerRecord;
 import io.github.blockneko11.simpleconfig.api.Config;
+import io.github.blockneko11.simpleconfig.api.annotation.Comment;
 import io.github.blockneko11.simpleconfig.api.holder.ConfigHolder;
 import io.github.blockneko11.simpleconfig.api.holder.collection.ListConfigHolder;
 import io.github.blockneko11.simpleconfig.api.holder.collection.MapConfigHolder;
@@ -13,6 +14,10 @@ public class ExampleConfig implements Config {
             .defaults(true)
             .build();
 
+    @Comment({
+            "Minecraft Server host",
+            "Default: localhost"
+    })
     public final ConfigHolder<String> host = ConfigHolder.builder(String.class)
             .defaults("localhost")
             .build();
