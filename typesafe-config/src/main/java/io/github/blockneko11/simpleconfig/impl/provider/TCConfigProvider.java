@@ -2,6 +2,7 @@ package io.github.blockneko11.simpleconfig.impl.provider;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
+import com.typesafe.config.ConfigRenderOptions;
 import io.github.blockneko11.simpleconfig.api.provider.ConfigProvider;
 
 import java.util.Map;
@@ -23,8 +24,12 @@ public class TCConfigProvider implements ConfigProvider {
 
     @Override
     public String serialize(Map<String, Object> config) {
+        ConfigRenderOptions options = ConfigRenderOptions.defaults()
+                .setJson(false)
+                .setOriginComments(false);
+
         return ConfigFactory.parseMap(config)
                 .root()
-                .render();
+                .render(options);
     }
 }

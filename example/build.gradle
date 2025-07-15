@@ -4,6 +4,9 @@ dependencies {
     implementation project(":gson")
     implementation "com.google.code.gson:gson:2.13.1"
 
+    implementation project(":typesafe-config")
+    implementation "com.typesafe:config:1.4.4"
+
     implementation project(":yaml")
     implementation "org.yaml:snakeyaml:2.4"
 }
