@@ -4,9 +4,10 @@ A Java library aims to ease configuration operations.
 Written in pure Java.
 
 ## Features
-### Supported file types
-- [x] json
-- [x] yaml
+### Supported serializers
+- [x] Gson
+- [x] Typesafe Config
+- [x] SnakeYAML
 
 ## Requirements
 - Java 8+

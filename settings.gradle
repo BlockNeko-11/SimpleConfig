@@ -1,6 +1,7 @@
 def subprojectDirs = [
         "core",
         "gson",
+        "typesafe-config",
         "yaml",
         "example"
 ]
