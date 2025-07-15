@@ -6,6 +6,7 @@ import io.github.blockneko11.simpleconfig.impl.Toml4JCommentConfigProvider;
 import io.github.blockneko11.simpleconfig.impl.Toml4JConfigProvider;
 import io.github.blockneko11.simpleconfig.impl.provider.GsonConfigProvider;
 import io.github.blockneko11.simpleconfig.impl.provider.SnakeYamlConfigProvider;
+import io.github.blockneko11.simpleconfig.impl.provider.TCCommentConfigProvider;
 import io.github.blockneko11.simpleconfig.impl.provider.TCConfigProvider;
 import org.jetbrains.annotations.TestOnly;
 
@@ -135,14 +136,14 @@ public class Example {
     }
 
     private static void file() {
-        File f = new File("run", "example.toml");
+        File f = new File("run", "example.conf");
 
         if (f.exists()) {
             f.delete();
         }
 
         try (FileConfigManager<ExampleConfig> holder = FileConfigManager.builder(ExampleConfig.class)
-                .provider(new Toml4JCommentConfigProvider())
+                .provider(new TCCommentConfigProvider())
                 .file(f)
                 .build()) {
             System.out.println("--- Test Start ---");
@@ -244,6 +245,7 @@ public class Example {
 
             System.out.println("--- Save ---");
             holder.save();
+            holder.set(null);
 
 
             System.out.println("--- Reload ---");

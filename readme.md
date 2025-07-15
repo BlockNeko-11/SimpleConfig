@@ -10,7 +10,7 @@ Written in pure Java.
 | Gson            | `gson`            | json    | ❌               | [GitHub](https://github.com/google/gson)               | -                                                           |
 | SnakeYaml       | `snake-yaml`      | yaml    | 🛠️ (WIP)       | [BitBucket](https://bitbucket.org/snakeyaml/snakeyaml) | -                                                           |
 | Typesafe Config | `typesafe-config` | conf    | ✅               | [GitHub](https://github.com/lightbend/config)          | -                                                           |
-| Toml4J          | `toml4j`          | toml    | 🛠️ (WIP)       | [GitHub](https://github.com/mwanji/toml4j)             | Only supports [TOML v0.4.0 spec](https://toml.io/en/v0.4.0) |
+| Toml4J          | `toml4j`          | toml    | ✅               | [GitHub](https://github.com/mwanji/toml4j)             | Only supports [TOML v0.4.0 spec](https://toml.io/en/v0.4.0) |
 
 ## Requirements
 - Java 8+

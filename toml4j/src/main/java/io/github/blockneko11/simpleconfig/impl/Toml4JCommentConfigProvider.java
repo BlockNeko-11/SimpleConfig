@@ -24,7 +24,7 @@ public class Toml4JCommentConfigProvider extends Toml4JConfigProvider implements
 
     @Override
     public String serialize(Map<String, Object> config, Map<String, List<String>> comments) {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder root = new StringBuilder();
         for (Map.Entry<String, Object> entry : config.entrySet()) {
             String key = entry.getKey();
             Object value = entry.getValue();
@@ -32,20 +32,20 @@ public class Toml4JCommentConfigProvider extends Toml4JConfigProvider implements
             List<String> lines = comments.get(key);
             boolean hasAnyComments = (lines != null);
             if (hasAnyComments) {
-                sb.append("\n");
+                root.append("\n");
 
                 for (String line : lines) {
-                    sb.append("# ").append(line).append("\n");
+                    root.append("# ").append(line).append("\n");
                 }
             }
 
             Map<String, Object> map = Collections.singletonMap(key, value);
-            sb.append(writer.write(map));
+            root.append(writer.write(map));
             if (hasAnyComments) {
-                sb.append("\n");
+                root.append("\n");
             }
         }
 
-        return sb.toString();
+        return root.toString();
     }
 }
