@@ -1,8 +1,9 @@
 def subprojectDirs = [
         "core",
         "gson",
+        "snake-yaml",
+        "toml4j",
         "typesafe-config",
-        "yaml",
         "example"
 ]
 

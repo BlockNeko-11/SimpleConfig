@@ -4,9 +4,12 @@ dependencies {
     implementation project(":gson")
     implementation "com.google.code.gson:gson:2.13.1"
 
+    implementation project(":snake-yaml")
+    implementation "org.yaml:snakeyaml:2.4"
+
+    implementation project(":toml4j")
+    implementation "com.moandjiezana.toml:toml4j:0.7.2"
+
     implementation project(":typesafe-config")
     implementation "com.typesafe:config:1.4.4"
-
-    implementation project(":yaml")
-    implementation "org.yaml:snakeyaml:2.4"
 }

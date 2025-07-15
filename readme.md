@@ -4,10 +4,13 @@ A Java library aims to ease configuration operations.
 Written in pure Java.
 
 ## Features
-### Supported serializers
-- [x] Gson
-- [x] Typesafe Config
-- [x] SnakeYAML
+### Support
+| Provider        | Module            | Formats | Link                                                   | Note                           |
+|-----------------|-------------------|---------|--------------------------------------------------------|--------------------------------|
+| Gson            | `gson`            | json    | [GitHub](https://github.com/google/gson)               | -                              |
+| SnakeYaml       | `snake-yaml`      | yaml    | [BitBucket](https://bitbucket.org/snakeyaml/snakeyaml) | -                              |
+| Typesafe Config | `typesafe-config` | conf    | [GitHub](https://github.com/lightbend/config)          | -                              |
+| Toml4J          | `toml4j`          | toml    | [GitHub](https://github.com/mwanji/toml4j)             | Only supports TOML v0.4.0 spec |
 
 ## Requirements
 - Java 8+

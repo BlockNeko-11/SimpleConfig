@@ -105,17 +105,17 @@ public class FileConfigManagerImpl<T extends Config> extends AbstractConfigManag
             }
 
             if (valueClass == Integer.class) {
-                ((IntegerConfigHolder) object).set((Integer) value);
+                ((IntegerConfigHolder) object).set(((Number) value).intValue());
                 continue;
             }
 
             if (valueClass == Long.class) {
-                ((LongConfigHolder) object).set((Long) value);
+                ((LongConfigHolder) object).set(((Number) value).longValue());
                 continue;
             }
 
             if (valueClass == Double.class) {
-                ((DoubleConfigHolder) object).set((Double) value);
+                ((DoubleConfigHolder) object).set(((Number) value).doubleValue());
                 continue;
             }
 

@@ -1,6 +1,5 @@
 package io.github.blockneko11.simpleconfig.impl.provider;
 
-import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import io.github.blockneko11.simpleconfig.api.provider.ConfigProvider;
 
@@ -10,9 +9,8 @@ import java.util.stream.Collectors;
 public class TCConfigProvider implements ConfigProvider {
     @Override
     public Map<String, Object> parse(String config) {
-        Config tcConfig = ConfigFactory.parseString(config);
-
-        return tcConfig.entrySet()
+        return ConfigFactory.parseString(config)
+                .entrySet()
                 .stream()
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,

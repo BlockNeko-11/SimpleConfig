@@ -6,6 +6,7 @@ import io.github.blockneko11.simpleconfig.api.annotation.Comment;
 import io.github.blockneko11.simpleconfig.api.holder.ConfigHolder;
 import io.github.blockneko11.simpleconfig.api.holder.collection.ListConfigHolder;
 import io.github.blockneko11.simpleconfig.api.holder.collection.MapConfigHolder;
+import io.github.blockneko11.simpleconfig.api.holder.number.DoubleConfigHolder;
 import io.github.blockneko11.simpleconfig.api.holder.number.IntegerConfigHolder;
 import io.github.blockneko11.simpleconfig.api.holder.base.BooleanConfigHolder;
 
@@ -32,6 +33,12 @@ public class ExampleConfig implements Config {
             .build();
 
     public final MapConfigHolder<String, String> info = MapConfigHolder.builder(String.class, String.class)
+            .build();
+
+    public final DoubleConfigHolder velocity = DoubleConfigHolder.builder()
+            .min(0.0D)
+            .max(10.0D)
+            .defaults(5.0D)
             .build();
 
 //    public final ConfigHolder<PlayerRecord> player = ConfigHolder.builder(PlayerRecord.class)
