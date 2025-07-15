@@ -2,6 +2,7 @@ package example;
 
 import io.github.blockneko11.simpleconfig.api.manager.FileConfigManager;
 import io.github.blockneko11.simpleconfig.api.manager.InMemoryConfigManager;
+import io.github.blockneko11.simpleconfig.impl.provider.GsonConfigProvider;
 import io.github.blockneko11.simpleconfig.impl.provider.SnakeYamlConfigProvider;
 import io.github.blockneko11.simpleconfig.impl.provider.TCConfigProvider;
 import org.jetbrains.annotations.TestOnly;
@@ -123,14 +124,14 @@ public class Example {
     }
 
     private static void file() {
-        File f = new File("run", "example.conf");
+        File f = new File("run", "example.json");
 
         if (f.exists()) {
             f.delete();
         }
 
         try (FileConfigManager<ExampleConfig> holder = FileConfigManager.builder(ExampleConfig.class)
-                .provider(new TCConfigProvider())
+                .provider(new GsonConfigProvider())
                 .file(f)
                 .build()) {
             System.out.println("--- Test Start ---");

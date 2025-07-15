@@ -15,7 +15,7 @@ public class GsonConfigProvider implements ConfigProvider {
 
     public GsonConfigProvider() {
         this(builder -> builder.serializeNulls()
-                .setObjectToNumberStrategy(ToNumberStrategyImpl.DOUBLE_INT_OR_LONG)
+                .setObjectToNumberStrategy(ToNumberStrategyImpl.DOUBLE_INT_OR_LONG.get())
                 .setPrettyPrinting());
     }
 
