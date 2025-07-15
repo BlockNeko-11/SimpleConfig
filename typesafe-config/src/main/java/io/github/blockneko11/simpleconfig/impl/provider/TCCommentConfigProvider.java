@@ -18,33 +18,30 @@ public class TCCommentConfigProvider extends TCConfigProvider implements Comment
 
     @Override
     public String serialize(Map<String, Object> config, Map<String, List<String>> comments) {
-        Config tcConfig = config.entrySet()
-                .stream()
-                .reduce(ConfigFactory.empty(),
-                        (sub, entry) -> {
-                            String key = entry.getKey();
-                            Object value = entry.getValue();
+        Config tcConfig = ConfigFactory.empty();
 
-                            ConfigValue tcValue;
-                            if (value == null || value instanceof Boolean || value instanceof String || value instanceof Number) {
-                                tcValue = ConfigValueFactory.fromAnyRef(value);
-                            } else if (value instanceof Iterable) {
-                                tcValue = ConfigValueFactory.fromIterable((Iterable<?>) value);
-                            } else if (value instanceof Map) {
-                                tcValue = ConfigValueFactory.fromMap((Map<String, ?>) value);
-                            } else {
-                                tcValue = ConfigValueFactory.fromAnyRef(String.valueOf(value));
-                            }
+        for (Map.Entry<String, Object> entry : config.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
 
-                            List<String> lines = comments.get(key);
-                            if (lines != null) {
-                                tcValue = tcValue.withOrigin(tcValue.origin().withComments(lines));
-                            }
+            ConfigValue tcValue;
+            if (value == null || value instanceof Boolean || value instanceof String || value instanceof Number) {
+                tcValue = ConfigValueFactory.fromAnyRef(value);
+            } else if (value instanceof List) {
+                tcValue = ConfigValueFactory.fromIterable((List<?>) value);
+            } else if (value instanceof Map) {
+                tcValue = ConfigValueFactory.fromMap((Map<String, ?>) value);
+            } else {
+                tcValue = ConfigValueFactory.fromAnyRef(String.valueOf(value));
+            }
 
-                            return sub.withValue(key, tcValue);
-                        },
-                        Config::withFallback
-                );
+            List<String> lines = comments.get(key);
+            if (lines != null) {
+                tcValue = tcValue.withOrigin(tcValue.origin().withComments(lines));
+            }
+
+            tcConfig = tcConfig.withValue(key, tcValue);
+        }
 
         return tcConfig.root().render(TCOptions.RENDER_OPTIONS.get());
     }
