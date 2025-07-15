@@ -13,6 +13,10 @@ allprojects {
     version = rootProject.artifact_version
 
     repositories {
+        maven {
+            name = "Jitpack"
+            url = "https://jitpack.io/"
+        }
         mavenCentral()
     }
 }

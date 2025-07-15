@@ -10,7 +10,7 @@ public class SnakeYamlConfigProvider implements ConfigProvider {
     private final Yaml yaml;
 
     public SnakeYamlConfigProvider() {
-        this(new Yaml());
+        this(new Yaml(SnakeYamlOptions.LOADER_OPTIONS.get(), SnakeYamlOptions.DUMPER_OPTIONS.get()));
     }
 
     public SnakeYamlConfigProvider(Yaml yaml) {

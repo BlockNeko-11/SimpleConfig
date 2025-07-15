@@ -2,7 +2,10 @@ package example;
 
 import io.github.blockneko11.simpleconfig.api.manager.FileConfigManager;
 import io.github.blockneko11.simpleconfig.api.manager.InMemoryConfigManager;
+import io.github.blockneko11.simpleconfig.impl.Toml4JConfigProvider;
 import io.github.blockneko11.simpleconfig.impl.provider.GsonConfigProvider;
+import io.github.blockneko11.simpleconfig.impl.provider.SnakeYamlConfigProvider;
+import io.github.blockneko11.simpleconfig.impl.provider.TCConfigProvider;
 import org.jetbrains.annotations.TestOnly;
 
 import java.io.File;
@@ -104,6 +107,15 @@ public class Example {
             System.out.println(config.info.get());
 
 
+            System.out.println("--- Config 'velocity' ---");
+            System.out.println("Before: ");
+            System.out.println(config.velocity.get());
+
+            System.out.println("After: ");
+            config.velocity.set(8.0D);
+            System.out.println(config.velocity.get());
+
+
 //            System.out.println("--- Config 'player' ---");
 //            System.out.println("Get: ");
 //            System.out.println(config.player.get());
@@ -122,14 +134,14 @@ public class Example {
     }
 
     private static void file() {
-        File f = new File("run", "example.json");
+        File f = new File("run", "example.toml");
 
         if (f.exists()) {
             f.delete();
         }
 
         try (FileConfigManager<ExampleConfig> holder = FileConfigManager.builder(ExampleConfig.class)
-                .provider(new GsonConfigProvider())
+                .provider(new Toml4JConfigProvider())
                 .file(f)
                 .build()) {
             System.out.println("--- Test Start ---");
@@ -211,6 +223,15 @@ public class Example {
             System.out.println(config.info.get());
 
 
+            System.out.println("--- Config 'velocity' ---");
+            System.out.println("Before: ");
+            System.out.println(config.velocity.get());
+
+            System.out.println("After: ");
+            config.velocity.set(8.0D);
+            System.out.println(config.velocity.get());
+
+
 //            System.out.println("--- Config 'player' ---");
 //            System.out.println("Get: ");
 //            System.out.println(config.player.get());
@@ -232,6 +253,7 @@ public class Example {
             System.out.println(config.port.get());
             System.out.println(config.users.get());
             System.out.println(config.info.get());
+            System.out.println(config.velocity.get());
 //            System.out.println(config.player.get());
             System.out.println("--- Test End ---");
         } catch (Exception e) {
