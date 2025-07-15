@@ -1,6 +1,5 @@
 package io.github.blockneko11.simpleconfig.api.provider;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -10,11 +9,6 @@ import java.util.Map;
  * @since 1.0.1
  */
 public interface CommentConfigProvider extends ConfigProvider {
-    @Override
-    default String serialize(Map<String, Object> config) {
-        return serialize(config, Collections.emptyMap());
-    }
-
     /**
      * 将配置序列化为字符串，并添加注释。
      * @param config 配置

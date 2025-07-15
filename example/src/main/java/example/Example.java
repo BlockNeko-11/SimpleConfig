@@ -2,6 +2,7 @@ package example;
 
 import io.github.blockneko11.simpleconfig.api.manager.FileConfigManager;
 import io.github.blockneko11.simpleconfig.api.manager.InMemoryConfigManager;
+import io.github.blockneko11.simpleconfig.impl.Toml4JCommentConfigProvider;
 import io.github.blockneko11.simpleconfig.impl.Toml4JConfigProvider;
 import io.github.blockneko11.simpleconfig.impl.provider.GsonConfigProvider;
 import io.github.blockneko11.simpleconfig.impl.provider.SnakeYamlConfigProvider;
@@ -141,7 +142,7 @@ public class Example {
         }
 
         try (FileConfigManager<ExampleConfig> holder = FileConfigManager.builder(ExampleConfig.class)
-                .provider(new Toml4JConfigProvider())
+                .provider(new Toml4JCommentConfigProvider())
                 .file(f)
                 .build()) {
             System.out.println("--- Test Start ---");
