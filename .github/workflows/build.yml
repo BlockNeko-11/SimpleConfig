@@ -31,6 +31,9 @@ jobs:
       - name: make gradle wrapper executable
         run: chmod +x ./gradlew
 
+      - name: test
+        run: ./gradlew clean test --stacktrace --no-daemon
+
       - name: build
         run: ./gradlew clean build -xtest --stacktrace --no-daemon
 

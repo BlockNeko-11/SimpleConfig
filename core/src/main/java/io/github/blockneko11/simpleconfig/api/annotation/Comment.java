@@ -13,5 +13,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.FIELD})
 public @interface Comment {
+    /**
+     * 获取注释，数组每一项为一行注释。
+     * @return 注释
+     */
     String[] value() default {};
 }
