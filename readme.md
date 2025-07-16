@@ -25,8 +25,7 @@ Written in pure Java.
 <project>
     <repositories>
         <repository>
-            <id>jitpack.io</id>
-            <name>Jitpack</name>
+            <id>jitpack</id>
             <url>https://jitpack.io/</url>
         </repository>
     </repositories>
