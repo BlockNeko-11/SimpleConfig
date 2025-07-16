@@ -2,10 +2,8 @@ package example;
 
 import io.github.blockneko11.simpleconfig.api.manager.FileConfigManager;
 import io.github.blockneko11.simpleconfig.api.manager.InMemoryConfigManager;
-import io.github.blockneko11.simpleconfig.impl.Toml4JConfigProvider;
-import io.github.blockneko11.simpleconfig.impl.provider.GsonConfigProvider;
-import io.github.blockneko11.simpleconfig.impl.provider.SnakeYamlConfigProvider;
-import io.github.blockneko11.simpleconfig.impl.provider.TCConfigProvider;
+import io.github.blockneko11.simpleconfig.api.provider.ConfigProvider;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.TestOnly;
 
 import java.io.File;
@@ -13,12 +11,7 @@ import java.util.Arrays;
 
 @TestOnly
 public class Example {
-    public static void main(String[] args) {
-        inMemory();
-        file();
-    }
-
-    private static void inMemory() {
+    public static void inMemory() {
         try (InMemoryConfigManager<ExampleConfig> holder = InMemoryConfigManager.builder(ExampleConfig.class)
                 .build()) {
             System.out.println("--- Test Start ---");
@@ -133,15 +126,15 @@ public class Example {
         }
     }
 
-    private static void file() {
-        File f = new File("run", "example.toml");
+    public static void file(@NotNull String extension, @NotNull ConfigProvider provider) {
+        File f = new File("run", "example." + extension);
 
         if (f.exists()) {
             f.delete();
         }
 
         try (FileConfigManager<ExampleConfig> holder = FileConfigManager.builder(ExampleConfig.class)
-                .provider(new Toml4JConfigProvider())
+                .provider(provider)
                 .file(f)
                 .build()) {
             System.out.println("--- Test Start ---");
@@ -243,6 +236,7 @@ public class Example {
 
             System.out.println("--- Save ---");
             holder.save();
+            holder.set(null);
 
 
             System.out.println("--- Reload ---");

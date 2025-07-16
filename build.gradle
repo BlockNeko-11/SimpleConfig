@@ -13,10 +13,6 @@ allprojects {
     version = rootProject.artifact_version
 
     repositories {
-        maven {
-            name = "Jitpack"
-            url = "https://jitpack.io/"
-        }
         mavenCentral()
     }
 }
@@ -33,6 +29,21 @@ subprojects {
     dependencies {
         compileOnly "org.jetbrains:annotations:26.0.2"
         annotationProcessor(compileOnly("org.projectlombok:lombok:1.18.36"))
+
+        testImplementation platform("org.junit:junit-bom:5.11.4")
+        testImplementation "org.junit.jupiter:junit-jupiter"
+        testAnnotationProcessor(testCompileOnly("org.projectlombok:lombok:1.18.36"))
+    }
+
+    test {
+        useJUnitPlatform()
+
+        ignoreFailures true
+
+        testLogging {
+            exceptionFormat = "full"
+            events "passed", "skipped", "failed"
+        }
     }
 
     idea {

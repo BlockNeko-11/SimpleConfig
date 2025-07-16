@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class Toml4JConfigProvider implements ConfigProvider {
     private final Toml toml;
-    private final TomlWriter writer;
+    protected final TomlWriter writer;
 
     public Toml4JConfigProvider() {
         this(new Toml(), new TomlWriter());

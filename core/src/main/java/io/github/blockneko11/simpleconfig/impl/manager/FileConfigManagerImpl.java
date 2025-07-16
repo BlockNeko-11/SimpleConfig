@@ -235,6 +235,11 @@ public class FileConfigManagerImpl<T extends Config> extends AbstractConfigManag
         Class<?> clazz = config.getClass();
         Map<String, List<String>> comments = new LinkedHashMap<>();
 
+        Comment root = clazz.getAnnotation(Comment.class);
+        if (root != null) {
+            comments.put("__root__", Arrays.asList(root.value()));
+        }
+
         for (Field f : clazz.getFields()) {
             if (!ConfigHolder.class.isAssignableFrom(f.getType())) {
                 continue;

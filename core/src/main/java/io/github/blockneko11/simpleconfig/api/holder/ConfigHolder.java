@@ -147,7 +147,7 @@ public interface ConfigHolder<T> {
 
         /**
          * 构建
-         * @return
+         * @return 配置项
          */
         ConfigHolder<T> build();
     }

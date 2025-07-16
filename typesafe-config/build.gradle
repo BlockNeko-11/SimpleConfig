@@ -1,4 +1,7 @@
 dependencies {
     api project(":core")
     compileOnly "com.typesafe:config:1.4.4"
+
+    testImplementation project(":example")
+    testRuntimeOnly "com.typesafe:config:1.4.4"
 }
