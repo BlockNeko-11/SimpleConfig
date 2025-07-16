@@ -4,10 +4,7 @@ import io.github.blockneko11.simpleconfig.api.manager.FileConfigManager;
 import io.github.blockneko11.simpleconfig.api.manager.InMemoryConfigManager;
 import io.github.blockneko11.simpleconfig.impl.Toml4JCommentConfigProvider;
 import io.github.blockneko11.simpleconfig.impl.Toml4JConfigProvider;
-import io.github.blockneko11.simpleconfig.impl.provider.GsonConfigProvider;
-import io.github.blockneko11.simpleconfig.impl.provider.SnakeYamlConfigProvider;
-import io.github.blockneko11.simpleconfig.impl.provider.TCCommentConfigProvider;
-import io.github.blockneko11.simpleconfig.impl.provider.TCConfigProvider;
+import io.github.blockneko11.simpleconfig.impl.provider.*;
 import org.jetbrains.annotations.TestOnly;
 
 import java.io.File;
@@ -136,14 +133,14 @@ public class Example {
     }
 
     private static void file() {
-        File f = new File("run", "example.conf");
+        File f = new File("run", "example.yaml");
 
         if (f.exists()) {
             f.delete();
         }
 
         try (FileConfigManager<ExampleConfig> holder = FileConfigManager.builder(ExampleConfig.class)
-                .provider(new TCCommentConfigProvider())
+                .provider(new SnakeYamlCommentConfigProvider())
                 .file(f)
                 .build()) {
             System.out.println("--- Test Start ---");

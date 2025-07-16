@@ -7,7 +7,7 @@ import org.yaml.snakeyaml.nodes.Tag;
 import java.util.Map;
 
 public class SnakeYamlConfigProvider implements ConfigProvider {
-    private final Yaml yaml;
+    protected final Yaml yaml;
 
     public SnakeYamlConfigProvider() {
         this(new Yaml(SnakeYamlOptions.LOADER_OPTIONS.get(), SnakeYamlOptions.DUMPER_OPTIONS.get()));
