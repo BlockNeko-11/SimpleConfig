@@ -43,6 +43,18 @@ public class TCCommentConfigProvider extends TCConfigProvider implements Comment
             tcConfig = tcConfig.withValue(key, tcValue);
         }
 
-        return tcConfig.root().render(TCOptions.RENDER_OPTIONS.get());
+        String content = tcConfig.root().render(TCOptions.RENDER_OPTIONS.get());
+
+        StringBuilder result = new StringBuilder();
+        List<String> header = comments.get("__root__");
+        if (header != null) {
+            for (String line : header) {
+                result.append("# ").append(line).append("\n");
+            }
+
+            result.append("\n");
+        }
+
+        return result.append(content).toString();
     }
 }

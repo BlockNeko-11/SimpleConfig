@@ -10,6 +10,10 @@ import io.github.blockneko11.simpleconfig.api.holder.number.DoubleConfigHolder;
 import io.github.blockneko11.simpleconfig.api.holder.number.IntegerConfigHolder;
 import io.github.blockneko11.simpleconfig.api.holder.base.BooleanConfigHolder;
 
+@Comment({
+        "Test Config",
+        "Hello World!"
+})
 public class ExampleConfig implements Config {
     public final BooleanConfigHolder enabled = BooleanConfigHolder.builder()
             .defaults(true)

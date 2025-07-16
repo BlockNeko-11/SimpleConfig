@@ -32,7 +32,16 @@ public class SnakeYamlCommentConfigProvider extends SnakeYamlConfigProvider impl
 
     @Override
     public String serialize(Map<String, Object> config, Map<String, List<String>> comments) {
-        StringBuilder root = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
+
+        List<String> root = comments.get("__root__");
+        if (root != null) {
+            for (String line : root) {
+                sb.append("# ").append(line).append("\n");
+            }
+
+            sb.append("\n");
+        }
 
         for (Map.Entry<String, Object> entry : config.entrySet()) {
             String key = entry.getKey();
@@ -48,22 +57,18 @@ public class SnakeYamlCommentConfigProvider extends SnakeYamlConfigProvider impl
                 bw.flush();
 
                 if (hasAnyComments) {
-                    root.append("\n");
+                    sb.append("\n");
 
                     for (String line : lines) {
-                        root.append("# ").append(line).append("\n");
+                        sb.append("# ").append(line).append("\n");
                     }
                 }
-                root.append(sw);
+                sb.append(sw);
             } catch (IOException ignored) {
-            }
-
-            if (hasAnyComments) {
-                root.append("\n");
             }
         }
 
-        return root.toString();
+        return sb.toString();
     }
 
     private MappingNode toNode(Map<String, Object> map) {

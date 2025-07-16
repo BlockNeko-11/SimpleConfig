@@ -133,14 +133,14 @@ public class Example {
     }
 
     private static void file() {
-        File f = new File("run", "example.yaml");
+        File f = new File("run", "example.conf");
 
         if (f.exists()) {
             f.delete();
         }
 
         try (FileConfigManager<ExampleConfig> holder = FileConfigManager.builder(ExampleConfig.class)
-                .provider(new SnakeYamlCommentConfigProvider())
+                .provider(new TCCommentConfigProvider())
                 .file(f)
                 .build()) {
             System.out.println("--- Test Start ---");
