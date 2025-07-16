@@ -64,6 +64,10 @@ public class SnakeYamlCommentConfigProvider extends SnakeYamlConfigProvider impl
                     }
                 }
                 sb.append(sw);
+
+                if (hasAnyComments) {
+                    sb.append("\n");
+                }
             } catch (IOException ignored) {
             }
         }

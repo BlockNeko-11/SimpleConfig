@@ -1,4 +1,7 @@
 dependencies {
     api project(":core")
     compileOnly "org.yaml:snakeyaml:2.4"
+
+    testImplementation project(":example")
+    testRuntimeOnly "org.yaml:snakeyaml:2.4"
 }
