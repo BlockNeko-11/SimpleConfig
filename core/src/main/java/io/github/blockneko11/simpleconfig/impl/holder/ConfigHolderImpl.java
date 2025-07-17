@@ -19,9 +19,9 @@ public class ConfigHolderImpl<T> implements ConfigHolder<T> {
     private T value;
 
     private ConfigHolderImpl(@NotNull Class<T> clazz,
-                               @NotNull Supplier<T> defaults,
-                               @Nullable ConfigValueParser<T> parser,
-                               @Nullable ConfigValueSerializer<T> serializer) {
+                             @NotNull Supplier<T> defaults,
+                             @Nullable ConfigValueParser<T> parser,
+                             @Nullable ConfigValueSerializer<T> serializer) {
         this.clazz = clazz;
         this.defaults = defaults;
         this.parser = parser;
@@ -39,27 +39,28 @@ public class ConfigHolderImpl<T> implements ConfigHolder<T> {
         return this.clazz;
     }
 
-    @Override
-    public T getDefaults() {
-        return this.defaults.get();
-    }
-
-    @Nullable
+    @NotNull
     @Override
     public T get() {
         if (this.value == null) {
-            T def = this.getDefaults();
-            if (def == null) {
-                throw new IllegalArgumentException("default value is null");
-            }
-
-            this.set(def);
+            this.reset();
         }
 
         return this.value;
     }
 
+    @NotNull
+    @Override
+    public T getDefaults() {
+        return this.defaults.get();
+    }
+
     public void set(@Nullable T value) {
+        if (value == null) {
+            this.reset();
+            return;
+        }
+
         this.value = value;
     }
 
@@ -110,6 +111,10 @@ public class ConfigHolderImpl<T> implements ConfigHolder<T> {
 
         @Override
         public ConfigHolder<T> build() {
+            if (defaults.get() == null) {
+                throw new IllegalArgumentException("defaults cannot be null");
+            }
+
             return new ConfigHolderImpl<>(this.clazz, defaults, parser, serializer);
         }
     }
