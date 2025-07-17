@@ -6,6 +6,7 @@ import io.github.blockneko11.simpleconfig.api.adapter.serialize.ConfigValueSeria
 import io.github.blockneko11.simpleconfig.api.annotation.Alias;
 import io.github.blockneko11.simpleconfig.api.annotation.Comment;
 import io.github.blockneko11.simpleconfig.api.annotation.Ignore;
+import io.github.blockneko11.simpleconfig.api.holder.base.ObjectConfigHolder;
 import io.github.blockneko11.simpleconfig.api.holder.collection.ListConfigHolder;
 import io.github.blockneko11.simpleconfig.api.holder.collection.MapConfigHolder;
 import io.github.blockneko11.simpleconfig.api.holder.number.LongConfigHolder;
@@ -125,11 +126,6 @@ public class FileConfigManagerImpl<T extends Config>
                 continue;
             }
 
-            if (valueClass == String.class) {
-                ((ConfigHolder<String>) object).set((String) value);
-                continue;
-            }
-
             if (valueClass == List.class) {
                 ((ListConfigHolder<Object>) object).set((List<Object>) value);
                 continue;
@@ -140,15 +136,15 @@ public class FileConfigManagerImpl<T extends Config>
                 continue;
             }
 
-            ConfigValueParser<Object> parser = ((ConfigHolder<Object>) object).getParser();
-            if (parser != null) {
-                ((ConfigHolder<Object>) object).set(parser.parse(value));
+            if (valueClass == String.class) {
+                ((ObjectConfigHolder<String>) object).set((String) value);
                 continue;
             }
 
-            throw new IllegalArgumentException("unable to parse value for " + key);
+            ConfigValueParser<Object> parser = ((ObjectConfigHolder<Object>) object).getParser();
+            ((ObjectConfigHolder<Object>) object).set(parser.parse(value));
 
-//            ((ConfigHolder<Object>) object).set(fromMap(valueClass, (Map<String, Object>) value));
+            // ((ConfigHolder<Object>) object).set(fromMap(valueClass, (Map<String, Object>) value));
         }
 
         return instance;
@@ -220,11 +216,6 @@ public class FileConfigManagerImpl<T extends Config>
                 continue;
             }
 
-            if (valueClass == String.class) {
-                map.put(key, ((ConfigHolder<String>) object).get());
-                continue;
-            }
-
             if (valueClass == List.class) {
                 map.put(key, ((ListConfigHolder) object).get());
                 continue;
@@ -235,13 +226,13 @@ public class FileConfigManagerImpl<T extends Config>
                 continue;
             }
 
-            ConfigValueSerializer<Object> serializer = ((ConfigHolder<Object>) object).getSerializer();
-            if (serializer != null) {
-                map.put(key, serializer.serialize(((ConfigHolder<Object>) object).get()));
+            if (valueClass == String.class) {
+                map.put(key, ((ObjectConfigHolder<String>) object).get());
                 continue;
             }
 
-            throw new IllegalArgumentException("unable to serialize value for " + key);
+            ConfigValueSerializer<Object> serializer = ((ObjectConfigHolder<Object>) object).getSerializer();
+            map.put(key, serializer.serialize(((ObjectConfigHolder<Object>) object).get()));
         }
 
         return map;

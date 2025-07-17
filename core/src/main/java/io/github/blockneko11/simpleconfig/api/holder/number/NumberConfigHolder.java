@@ -2,9 +2,6 @@ package io.github.blockneko11.simpleconfig.api.holder.number;
 
 import io.github.blockneko11.simpleconfig.api.holder.ConfigHolder;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.function.Supplier;
 
 /**
  * 表示一个数字类型的配置项。
@@ -42,15 +39,7 @@ public interface NumberConfigHolder<N extends Number> extends ConfigHolder<N> {
      * @author BlockNeko-11
      * @since 1.0.0
      */
-    interface Builder<N extends Number> extends ConfigHolder.Builder<N> {
-        @Override
-        default Builder<N> defaults(@Nullable N defaults) {
-            return (Builder<N>) ConfigHolder.Builder.super.defaults(defaults);
-        }
-
-        @Override
-        Builder<N> defaults(@NotNull Supplier<N> defaults);
-
+    interface Builder<N extends Number> extends ConfigHolder.Builder<N, NumberConfigHolder<N>, Builder<N>> {
         /**
          * 设置数字的最小值限制。
          * @param min 最小值
@@ -64,8 +53,5 @@ public interface NumberConfigHolder<N extends Number> extends ConfigHolder<N> {
          * @return 自身
          */
         Builder<N> max(@NotNull N max);
-
-        @Override
-        NumberConfigHolder<N> build();
     }
 }

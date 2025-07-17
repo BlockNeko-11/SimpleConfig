@@ -2,7 +2,6 @@ package io.github.blockneko11.simpleconfig.impl.holder.number;
 
 import io.github.blockneko11.simpleconfig.api.holder.number.NumberConfigHolder;
 import io.github.blockneko11.simpleconfig.api.holder.number.NumberConfigHolderConstructor;
-import io.github.blockneko11.simpleconfig.impl.holder.ConfigHolderBuilderImpl;
 import io.github.blockneko11.simpleconfig.impl.holder.ConfigHolderImpl;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -50,7 +49,7 @@ public abstract class NumberConfigHolderImpl<N extends Number> extends ConfigHol
     public void set(@Nullable N value) {
         N defaults = this.getDefaults();
 
-        if (!this.isInRange(value)) {
+        if (value == null || !this.isInRange(value)) {
             super.set(defaults);
             return;
         }
@@ -58,7 +57,9 @@ public abstract class NumberConfigHolderImpl<N extends Number> extends ConfigHol
         super.set(value);
     }
 
-    public static abstract class Builder<N extends Number> extends ConfigHolderBuilderImpl<N> implements NumberConfigHolder.Builder<N> {
+    public static abstract class Builder<N extends Number>
+            extends BuilderImpl<N, NumberConfigHolder<N>, NumberConfigHolder.Builder<N>>
+            implements NumberConfigHolder.Builder<N> {
         private final NumberConfigHolderConstructor<N> constructor;
         protected N min;
         protected N max;
@@ -71,16 +72,6 @@ public abstract class NumberConfigHolderImpl<N extends Number> extends ConfigHol
             this.constructor = constructor;
             this.min = min;
             this.max = max;
-        }
-
-        @Override
-        public Builder<N> defaults(N defaults) {
-            return (Builder<N>) super.defaults(defaults);
-        }
-
-        @Override
-        public Builder<N> defaults(@NotNull Supplier<N> defaults) {
-            return (Builder<N>) super.defaults(defaults);
         }
 
         @Override

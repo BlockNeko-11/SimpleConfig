@@ -8,7 +8,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Supplier;
 
 /**
  * 表示一个 {@link Map} 类型的配置项，同时也实现了 {@link Map} 接口。
@@ -104,16 +103,6 @@ public interface MapConfigHolder<K, V> extends ConfigHolder<Map<K, V>>, Map<K, V
      * @author BlockNeko-11
      * @since 1.0.0
      */
-    interface Builder<K, V> extends ConfigHolder.Builder<Map<K, V>> {
-        @Override
-        default Builder<K, V> defaults(@Nullable Map<K, V> defaults) {
-            return (Builder<K, V>) ConfigHolder.Builder.super.defaults(defaults);
-        }
-
-        @Override
-        Builder<K, V> defaults(@NotNull Supplier<Map<K, V>> defaults);
-
-        @Override
-        MapConfigHolder<K, V> build();
+    interface Builder<K, V> extends ConfigHolder.Builder<Map<K, V>, MapConfigHolder<K, V>, Builder<K, V>> {
     }
 }

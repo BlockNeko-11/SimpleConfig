@@ -3,13 +3,11 @@ package io.github.blockneko11.simpleconfig.api.holder.collection;
 import io.github.blockneko11.simpleconfig.api.holder.ConfigHolder;
 import io.github.blockneko11.simpleconfig.impl.holder.collection.ListConfigHolderImpl;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.function.Supplier;
 
 /**
  * 表示一个 {@link List} 类型的配置项，同时也实现了 {@link List} 接口。
@@ -158,16 +156,6 @@ public interface ListConfigHolder<E> extends ConfigHolder<List<E>>, List<E> {
      * @author BlockNeko-11
      * @since 1.0.0
      */
-    interface Builder<E> extends ConfigHolder.Builder<List<E>> {
-        @Override
-        default Builder<E> defaults(@Nullable List<E> defaults) {
-            return (Builder<E>) ConfigHolder.Builder.super.defaults(defaults);
-        }
-
-        @Override
-        Builder<E> defaults(@NotNull Supplier<List<E>> defaults);
-
-        @Override
-        ListConfigHolder<E> build();
+    interface Builder<E> extends ConfigHolder.Builder<List<E>, ListConfigHolder<E>, Builder<E>> {
     }
 }

@@ -38,8 +38,6 @@ subprojects {
     test {
         useJUnitPlatform()
 
-        ignoreFailures true
-
         testLogging {
             exceptionFormat = "full"
             events "passed", "skipped", "failed"

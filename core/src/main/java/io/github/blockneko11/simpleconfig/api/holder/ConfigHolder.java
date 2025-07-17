@@ -1,9 +1,5 @@
 package io.github.blockneko11.simpleconfig.api.holder;
 
-import io.github.blockneko11.simpleconfig.api.adapter.ConfigValueAdapter;
-import io.github.blockneko11.simpleconfig.api.adapter.parse.ConfigValueParser;
-import io.github.blockneko11.simpleconfig.api.adapter.serialize.ConfigValueSerializer;
-import io.github.blockneko11.simpleconfig.impl.holder.ConfigHolderImpl;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -18,20 +14,6 @@ import java.util.function.Supplier;
  * @since 1.0.0
  */
 public interface ConfigHolder<T> {
-
-    // builder
-
-    /**
-     * 创建一个配置项构建器。
-     * @param clazz 配置项的类型
-     * @return 一个配置项构建器
-     * @param <T> 配置项的类型
-     */
-    @NotNull
-    static <T> ConfigHolder.Builder<T> builder(@NotNull Class<T> clazz) {
-        return new ConfigHolderImpl.Builder<>(clazz);
-    }
-
     // metadata
 
     /**
@@ -112,49 +94,41 @@ public interface ConfigHolder<T> {
      */
     void set(@Nullable T value);
 
-    // serialize
-
-    @Nullable
-    ConfigValueParser<T> getParser();
-
-    @Nullable
-    ConfigValueSerializer<T> getSerializer();
-
     /**
      * 表示一个创建配置项的构建器。
+     *
      * @param <T> 配置项的类型
      * @author BlockNeko-11
      * @since 1.0.0
      */
-    interface Builder<T> {
+    interface Builder<
+            T,
+            Result extends ConfigHolder<T>,
+            Impl extends Builder<T, Result, Impl>
+            > {
         /**
          * 设置默认值。
+         *
          * @param defaults 默认值
          * @return 自身
          */
-        default Builder<T> defaults(@Nullable T defaults) {
+        default Impl defaults(@Nullable T defaults) {
             return defaults(() -> defaults);
         }
 
         /**
          * 设置默认值。
+         *
          * @param defaults 默认值
          * @return 自身
          */
-        Builder<T> defaults(@NotNull Supplier<T> defaults);
-
-        default Builder<T> adapter(@NotNull ConfigValueAdapter<T> adapter) {
-            return this.parser(adapter).serializer(adapter);
-        }
-
-        Builder<T> parser(@Nullable ConfigValueParser<T> parser);
-
-        Builder<T> serializer(@Nullable ConfigValueSerializer<T> serializer);
+        Impl defaults(@NotNull Supplier<T> defaults);
 
         /**
          * 构建
+         *
          * @return 配置项
          */
-        ConfigHolder<T> build();
+        Result build();
     }
 }

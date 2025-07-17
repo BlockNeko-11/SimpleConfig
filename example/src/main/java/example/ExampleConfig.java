@@ -3,7 +3,7 @@ package example;
 import example.model.Result;
 import io.github.blockneko11.simpleconfig.api.Config;
 import io.github.blockneko11.simpleconfig.api.annotation.Comment;
-import io.github.blockneko11.simpleconfig.api.holder.ConfigHolder;
+import io.github.blockneko11.simpleconfig.api.holder.base.ObjectConfigHolder;
 import io.github.blockneko11.simpleconfig.api.holder.collection.ListConfigHolder;
 import io.github.blockneko11.simpleconfig.api.holder.collection.MapConfigHolder;
 import io.github.blockneko11.simpleconfig.api.holder.number.DoubleConfigHolder;
@@ -27,7 +27,7 @@ public class ExampleConfig implements Config {
             "Minecraft Server host",
             "Default: localhost"
     })
-    public final ConfigHolder<String> host = ConfigHolder.builder(String.class)
+    public final ObjectConfigHolder<String> host = ObjectConfigHolder.builder(String.class)
             .defaults("localhost")
             .build();
 
@@ -49,13 +49,13 @@ public class ExampleConfig implements Config {
             .defaults(5.0D)
             .build();
 
-    public final ConfigHolder<Optional<String>> author = ConfigHolder.builder(
+    public final ObjectConfigHolder<Optional<String>> author = ObjectConfigHolder.builder(
             (Class<Optional<String>>) (Class<?>) Optional.class)
             .adapter(new OptionalAdapter<>())
             .defaults(Optional::empty)
             .build();
 
-    public final ConfigHolder<Result> result = ConfigHolder.builder(Result.class)
+    public final ObjectConfigHolder<Result> result = ObjectConfigHolder.builder(Result.class)
             .adapter(new EnumAdapter<>(Result.class))
             .defaults(Result.PASS)
             .build();
