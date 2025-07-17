@@ -4,13 +4,13 @@ import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import com.typesafe.config.ConfigValue;
 import com.typesafe.config.ConfigValueFactory;
-import io.github.blockneko11.simpleconfig.api.provider.CommentConfigProvider;
+import io.github.blockneko11.simpleconfig.api.provider.CommentedConfigProvider;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class TCCommentConfigProvider extends TCConfigProvider implements CommentConfigProvider {
+public class TCCommentedConfigProvider extends TCConfigProvider implements CommentedConfigProvider {
     @Override
     public String serialize(Map<String, Object> config) {
         return this.serialize(config, Collections.emptyMap());

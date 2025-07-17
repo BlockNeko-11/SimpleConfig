@@ -5,11 +5,11 @@ import io.github.blockneko11.simpleconfig.api.manager.ConfigManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class AbstractConfigManager<T extends Config> implements ConfigManager<T> {
+public abstract class ConfigManagerImpl<T extends Config> implements ConfigManager<T> {
     private final Class<T> clazz;
     private T config = null;
 
-    protected AbstractConfigManager(@NotNull Class<T> clazz) {
+    protected ConfigManagerImpl(@NotNull Class<T> clazz) {
         this.clazz = clazz;
     }
 

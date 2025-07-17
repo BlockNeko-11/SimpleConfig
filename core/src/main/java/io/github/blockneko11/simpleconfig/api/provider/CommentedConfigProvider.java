@@ -6,9 +6,9 @@ import java.util.Map;
 /**
  * 表示一个提供配置处理并提供注释输出的 API。
  * @author BlockNeko-11
- * @since 1.0.1
+ * @since 1.1.0
  */
-public interface CommentConfigProvider extends ConfigProvider {
+public interface CommentedConfigProvider extends ConfigProvider {
     /**
      * 将配置序列化为字符串，并添加注释。
      * @param config 配置

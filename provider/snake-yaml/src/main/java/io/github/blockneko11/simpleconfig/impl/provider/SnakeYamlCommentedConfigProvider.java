@@ -1,6 +1,6 @@
 package io.github.blockneko11.simpleconfig.impl.provider;
 
-import io.github.blockneko11.simpleconfig.api.provider.CommentConfigProvider;
+import io.github.blockneko11.simpleconfig.api.provider.CommentedConfigProvider;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.nodes.MappingNode;
@@ -16,12 +16,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class SnakeYamlCommentConfigProvider extends SnakeYamlConfigProvider implements CommentConfigProvider {
-    public SnakeYamlCommentConfigProvider() {
+public class SnakeYamlCommentedConfigProvider extends SnakeYamlConfigProvider implements CommentedConfigProvider {
+    public SnakeYamlCommentedConfigProvider() {
         super();
     }
 
-    public SnakeYamlCommentConfigProvider(Yaml yaml) {
+    public SnakeYamlCommentedConfigProvider(Yaml yaml) {
         super(yaml);
     }
 

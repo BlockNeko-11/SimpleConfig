@@ -8,17 +8,17 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
-public abstract class AbstractBuilder<T> implements ConfigHolder.Builder<T> {
+public abstract class ConfigHolderBuilderImpl<T> implements ConfigHolder.Builder<T> {
     protected Supplier<T> defaults;
     protected ConfigValueParser<T> parser;
     protected ConfigValueSerializer<T> serializer;
 
-    protected AbstractBuilder(@NotNull Supplier<T> defaults) {
+    protected ConfigHolderBuilderImpl(@NotNull Supplier<T> defaults) {
         this.defaults = defaults;
     }
 
     @Override
-    public AbstractBuilder<T> defaults(@NotNull Supplier<T> defaults) {
+    public ConfigHolderBuilderImpl<T> defaults(@NotNull Supplier<T> defaults) {
         this.defaults = defaults;
         return this;
     }

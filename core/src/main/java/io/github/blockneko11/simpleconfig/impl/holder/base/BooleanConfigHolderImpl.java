@@ -1,7 +1,7 @@
 package io.github.blockneko11.simpleconfig.impl.holder.base;
 
 import io.github.blockneko11.simpleconfig.api.holder.base.BooleanConfigHolder;
-import io.github.blockneko11.simpleconfig.impl.holder.AbstractBuilder;
+import io.github.blockneko11.simpleconfig.impl.holder.ConfigHolderBuilderImpl;
 import io.github.blockneko11.simpleconfig.impl.holder.ConfigHolderImpl;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -22,7 +22,7 @@ public class BooleanConfigHolderImpl extends ConfigHolderImpl<Boolean> implement
         super.set(value);
     }
 
-    public static class Builder extends AbstractBuilder<Boolean> implements BooleanConfigHolder.Builder {
+    public static class Builder extends ConfigHolderBuilderImpl<Boolean> implements BooleanConfigHolder.Builder {
         public Builder() {
             super(() -> false);
         }

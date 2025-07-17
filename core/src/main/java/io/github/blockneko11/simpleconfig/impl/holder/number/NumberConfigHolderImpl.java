@@ -2,7 +2,7 @@ package io.github.blockneko11.simpleconfig.impl.holder.number;
 
 import io.github.blockneko11.simpleconfig.api.holder.number.NumberConfigHolder;
 import io.github.blockneko11.simpleconfig.api.holder.number.NumberConfigHolderConstructor;
-import io.github.blockneko11.simpleconfig.impl.holder.AbstractBuilder;
+import io.github.blockneko11.simpleconfig.impl.holder.ConfigHolderBuilderImpl;
 import io.github.blockneko11.simpleconfig.impl.holder.ConfigHolderImpl;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -67,7 +67,7 @@ public abstract class NumberConfigHolderImpl<N extends Number> extends ConfigHol
         super.set(value);
     }
 
-    public static abstract class Builder<N extends Number> extends AbstractBuilder<N> implements NumberConfigHolder.Builder<N> {
+    public static abstract class Builder<N extends Number> extends ConfigHolderBuilderImpl<N> implements NumberConfigHolder.Builder<N> {
         private final NumberConfigHolderConstructor<N> constructor;
         protected N min;
         protected N max;

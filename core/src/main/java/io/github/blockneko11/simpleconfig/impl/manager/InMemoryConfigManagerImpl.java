@@ -4,7 +4,7 @@ import io.github.blockneko11.simpleconfig.api.Config;
 import io.github.blockneko11.simpleconfig.api.manager.InMemoryConfigManager;
 import org.jetbrains.annotations.NotNull;
 
-public class InMemoryConfigManagerImpl<T extends Config> extends AbstractConfigManager<T> implements InMemoryConfigManager<T> {
+public class InMemoryConfigManagerImpl<T extends Config> extends ConfigManagerImpl<T> implements InMemoryConfigManager<T> {
     protected InMemoryConfigManagerImpl(@NotNull Class<T> clazz) {
         super(clazz);
     }
@@ -20,7 +20,7 @@ public class InMemoryConfigManagerImpl<T extends Config> extends AbstractConfigM
     }
 
     public static class Builder<T extends Config>
-            extends AbstractConfigManager.Builder<T>
+            extends ConfigManagerImpl.Builder<T>
             implements InMemoryConfigManager.Builder<T> {
         public Builder(@NotNull Class<T> clazz) {
             super(clazz);

@@ -1,7 +1,7 @@
 package io.github.blockneko11.simpleconfig.impl.holder.collection;
 
 import io.github.blockneko11.simpleconfig.api.holder.collection.ListConfigHolder;
-import io.github.blockneko11.simpleconfig.impl.holder.AbstractBuilder;
+import io.github.blockneko11.simpleconfig.impl.holder.ConfigHolderBuilderImpl;
 import io.github.blockneko11.simpleconfig.impl.holder.ConfigHolderImpl;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,7 +16,7 @@ public class ListConfigHolderImpl<E> extends ConfigHolderImpl<List<E>> implement
         this.elementClass = elementClass;
     }
 
-    public static class Builder<E> extends AbstractBuilder<List<E>> implements ListConfigHolder.Builder<E> {
+    public static class Builder<E> extends ConfigHolderBuilderImpl<List<E>> implements ListConfigHolder.Builder<E> {
         private final Class<E> elementClass;
 
         public Builder(@NotNull Class<E> elementClass) {

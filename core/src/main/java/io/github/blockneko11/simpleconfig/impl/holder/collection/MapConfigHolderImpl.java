@@ -1,7 +1,7 @@
 package io.github.blockneko11.simpleconfig.impl.holder.collection;
 
 import io.github.blockneko11.simpleconfig.api.holder.collection.MapConfigHolder;
-import io.github.blockneko11.simpleconfig.impl.holder.AbstractBuilder;
+import io.github.blockneko11.simpleconfig.impl.holder.ConfigHolderBuilderImpl;
 import io.github.blockneko11.simpleconfig.impl.holder.ConfigHolderImpl;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,7 +21,7 @@ public class MapConfigHolderImpl<K, V> extends ConfigHolderImpl<Map<K, V>> imple
         this.valueClass = valueClass;
     }
 
-    public static class Builder<K, V> extends AbstractBuilder<Map<K, V>> implements MapConfigHolder.Builder<K, V> {
+    public static class Builder<K, V> extends ConfigHolderBuilderImpl<Map<K, V>> implements MapConfigHolder.Builder<K, V> {
         private final Class<K> keyClass;
         private final Class<V> valueClass;
 

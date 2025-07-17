@@ -1,6 +1,6 @@
 package example;
 
-import io.github.blockneko11.simpleconfig.impl.provider.TCCommentConfigProvider;
+import io.github.blockneko11.simpleconfig.impl.provider.TCCommentedConfigProvider;
 import io.github.blockneko11.simpleconfig.impl.provider.TCConfigProvider;
 import org.junit.jupiter.api.Test;
 
@@ -12,6 +12,6 @@ public class ExampleTest {
 
     @Test
     public void fileTestWithComments() {
-        Example.file("conf", new TCCommentConfigProvider());
+        Example.file("conf", new TCCommentedConfigProvider());
     }
 }

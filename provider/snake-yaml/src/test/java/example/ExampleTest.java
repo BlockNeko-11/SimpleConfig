@@ -1,6 +1,6 @@
 package example;
 
-import io.github.blockneko11.simpleconfig.impl.provider.SnakeYamlCommentConfigProvider;
+import io.github.blockneko11.simpleconfig.impl.provider.SnakeYamlCommentedConfigProvider;
 import io.github.blockneko11.simpleconfig.impl.provider.SnakeYamlConfigProvider;
 import org.junit.jupiter.api.Test;
 
@@ -12,6 +12,6 @@ public class ExampleTest {
 
     @Test
     public void fileTestWithComments() {
-        Example.file("yaml", new SnakeYamlCommentConfigProvider());
+        Example.file("yaml", new SnakeYamlCommentedConfigProvider());
     }
 }

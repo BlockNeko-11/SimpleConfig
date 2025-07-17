@@ -14,7 +14,7 @@ import io.github.blockneko11.simpleconfig.api.holder.ConfigHolder;
 import io.github.blockneko11.simpleconfig.api.holder.number.DoubleConfigHolder;
 import io.github.blockneko11.simpleconfig.api.holder.number.IntegerConfigHolder;
 import io.github.blockneko11.simpleconfig.api.holder.base.BooleanConfigHolder;
-import io.github.blockneko11.simpleconfig.api.provider.CommentConfigProvider;
+import io.github.blockneko11.simpleconfig.api.provider.CommentedConfigProvider;
 import io.github.blockneko11.simpleconfig.api.provider.ConfigProvider;
 import io.github.blockneko11.simpleconfig.util.reflect.ReflectUtil;
 import org.jetbrains.annotations.NotNull;
@@ -25,7 +25,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class FileConfigManagerImpl<T extends Config>
-        extends AbstractConfigManager<T>
+        extends ConfigManagerImpl<T>
         implements FileConfigManager<T> {
     private final ConfigProvider provider;
     private final File file;
@@ -158,8 +158,8 @@ public class FileConfigManagerImpl<T extends Config>
     public void save() throws IOException, ReflectiveOperationException {
         Map<String, Object> config = toMap(get());
         String serialized;
-        if (this.provider instanceof CommentConfigProvider) {
-            serialized = ((CommentConfigProvider) this.provider).serialize(config, getComments(get()));
+        if (this.provider instanceof CommentedConfigProvider) {
+            serialized = ((CommentedConfigProvider) this.provider).serialize(config, getComments(get()));
         } else {
             serialized = this.provider.serialize(config);
         }
@@ -293,7 +293,7 @@ public class FileConfigManagerImpl<T extends Config>
     }
 
     public static class Builder<T extends Config>
-            extends AbstractConfigManager.Builder<T>
+            extends ConfigManagerImpl.Builder<T>
             implements FileConfigManager.Builder<T> {
         private File file;
         private ConfigProvider provider;

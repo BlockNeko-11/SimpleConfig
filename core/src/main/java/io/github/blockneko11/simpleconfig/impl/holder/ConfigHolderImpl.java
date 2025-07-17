@@ -75,7 +75,7 @@ public class ConfigHolderImpl<T> implements ConfigHolder<T> {
         return this.serializer;
     }
 
-    public static class Builder<T> extends AbstractBuilder<T> implements ConfigHolder.Builder<T> {
+    public static class Builder<T> extends ConfigHolderBuilderImpl<T> implements ConfigHolder.Builder<T> {
         private final Class<T> clazz;
 
         public Builder(@NotNull Class<T> clazz) {

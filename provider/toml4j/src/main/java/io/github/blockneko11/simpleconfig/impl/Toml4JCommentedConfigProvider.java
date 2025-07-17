@@ -2,18 +2,18 @@ package io.github.blockneko11.simpleconfig.impl;
 
 import com.moandjiezana.toml.Toml;
 import com.moandjiezana.toml.TomlWriter;
-import io.github.blockneko11.simpleconfig.api.provider.CommentConfigProvider;
+import io.github.blockneko11.simpleconfig.api.provider.CommentedConfigProvider;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class Toml4JCommentConfigProvider extends Toml4JConfigProvider implements CommentConfigProvider {
-    public Toml4JCommentConfigProvider() {
+public class Toml4JCommentedConfigProvider extends Toml4JConfigProvider implements CommentedConfigProvider {
+    public Toml4JCommentedConfigProvider() {
         super();
     }
 
-    public Toml4JCommentConfigProvider(Toml toml, TomlWriter writer) {
+    public Toml4JCommentedConfigProvider(Toml toml, TomlWriter writer) {
         super(toml, writer);
     }
 
