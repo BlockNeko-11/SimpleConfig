@@ -1,6 +1,6 @@
 package example;
 
-import example.model.PlayerRecord;
+import example.model.Result;
 import io.github.blockneko11.simpleconfig.api.Config;
 import io.github.blockneko11.simpleconfig.api.annotation.Comment;
 import io.github.blockneko11.simpleconfig.api.holder.ConfigHolder;
@@ -9,6 +9,10 @@ import io.github.blockneko11.simpleconfig.api.holder.collection.MapConfigHolder;
 import io.github.blockneko11.simpleconfig.api.holder.number.DoubleConfigHolder;
 import io.github.blockneko11.simpleconfig.api.holder.number.IntegerConfigHolder;
 import io.github.blockneko11.simpleconfig.api.holder.base.BooleanConfigHolder;
+import io.github.blockneko11.simpleconfig.impl.adapter.lang.EnumAdapter;
+import io.github.blockneko11.simpleconfig.impl.adapter.lang.OptionalAdapter;
+
+import java.util.Optional;
 
 @Comment({
         "Test Config",
@@ -43,6 +47,17 @@ public class ExampleConfig implements Config {
             .min(0.0D)
             .max(10.0D)
             .defaults(5.0D)
+            .build();
+
+    public final ConfigHolder<Optional<String>> author = ConfigHolder.builder(
+            (Class<Optional<String>>) (Class<?>) Optional.class)
+            .adapter(new OptionalAdapter<>())
+            .defaults(Optional::empty)
+            .build();
+
+    public final ConfigHolder<Result> result = ConfigHolder.builder(Result.class)
+            .adapter(new EnumAdapter<>(Result.class))
+            .defaults(Result.PASS)
             .build();
 
 //    public final ConfigHolder<PlayerRecord> player = ConfigHolder.builder(PlayerRecord.class)

@@ -1,7 +1,9 @@
 package io.github.blockneko11.simpleconfig.api.adapter.parse;
 
-import java.util.Map;
+import org.jetbrains.annotations.NotNull;
 
+@FunctionalInterface
 public interface ConfigValueParser<T> {
-    T parse(Map<String, Object> config);
+    @NotNull
+    T parse(@NotNull Object value);
 }

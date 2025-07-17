@@ -1,5 +1,8 @@
 package io.github.blockneko11.simpleconfig.api.holder;
 
+import io.github.blockneko11.simpleconfig.api.adapter.ConfigValueAdapter;
+import io.github.blockneko11.simpleconfig.api.adapter.parse.ConfigValueParser;
+import io.github.blockneko11.simpleconfig.api.adapter.serialize.ConfigValueSerializer;
 import io.github.blockneko11.simpleconfig.impl.holder.ConfigHolderImpl;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -111,7 +114,7 @@ public interface ConfigHolder<T> {
      */
     @NotNull
     default <U> Optional<U> mapOptional(@NotNull Function<T, U> mapper) {
-        return Optional.ofNullable(map(mapper));
+        return Optional.ofNullable(this.map(mapper));
     }
 
     // setter
@@ -121,6 +124,14 @@ public interface ConfigHolder<T> {
      * @param value 值
      */
     void set(@Nullable T value);
+
+    // serialize
+
+    @Nullable
+    ConfigValueParser<T> getParser();
+
+    @Nullable
+    ConfigValueSerializer<T> getSerializer();
 
     /**
      * 表示一个创建配置项的构建器。
@@ -144,6 +155,14 @@ public interface ConfigHolder<T> {
          * @return 自身
          */
         Builder<T> defaults(@NotNull Supplier<T> defaults);
+
+        default Builder<T> adapter(@NotNull ConfigValueAdapter<T> adapter) {
+            return this.parser(adapter).serializer(adapter);
+        }
+
+        Builder<T> parser(@Nullable ConfigValueParser<T> parser);
+
+        Builder<T> serializer(@Nullable ConfigValueSerializer<T> serializer);
 
         /**
          * 构建

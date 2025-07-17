@@ -1,5 +1,6 @@
 package example;
 
+import example.model.Result;
 import io.github.blockneko11.simpleconfig.api.manager.FileConfigManager;
 import io.github.blockneko11.simpleconfig.api.manager.InMemoryConfigManager;
 import io.github.blockneko11.simpleconfig.api.provider.ConfigProvider;
@@ -8,6 +9,7 @@ import org.jetbrains.annotations.TestOnly;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Optional;
 
 @TestOnly
 public class Example {
@@ -107,6 +109,24 @@ public class Example {
             System.out.println("After: ");
             config.velocity.set(8.0D);
             System.out.println(config.velocity.get());
+
+
+            System.out.println("--- Config 'author' ---");
+            System.out.println("Base: ");
+            System.out.println(config.author.get());
+
+            System.out.println("Set: ");
+            config.author.set(Optional.of("blockneko11"));
+            System.out.println(config.author.get());
+
+
+            System.out.println("--- Config 'result' ---");
+            System.out.println("Base: ");
+            System.out.println(config.result.get());
+
+            System.out.println("Set: ");
+            config.result.set(Result.FAIL);
+            System.out.println(config.result.get());
 
 
 //            System.out.println("--- Config 'player' ---");
@@ -223,6 +243,24 @@ public class Example {
             System.out.println("After: ");
             config.velocity.set(8.0D);
             System.out.println(config.velocity.get());
+
+
+            System.out.println("--- Config 'author' ---");
+            System.out.println("Base: ");
+            System.out.println(config.author.get());
+
+            System.out.println("Set: ");
+            config.author.set(Optional.of("blockneko11"));
+            System.out.println(config.author.get());
+
+
+            System.out.println("--- Config 'result' ---");
+            System.out.println("Base: ");
+            System.out.println(config.result.get());
+
+            System.out.println("Set: ");
+            config.result.set(Result.FAIL);
+            System.out.println(config.result.get());
 
 
 //            System.out.println("--- Config 'player' ---");

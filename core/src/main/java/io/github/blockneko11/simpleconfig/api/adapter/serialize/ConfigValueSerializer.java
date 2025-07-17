@@ -1,7 +1,9 @@
 package io.github.blockneko11.simpleconfig.api.adapter.serialize;
 
-import java.util.Map;
+import org.jetbrains.annotations.Nullable;
 
+@FunctionalInterface
 public interface ConfigValueSerializer<T> {
-    Map<String, Object> serialize(T value);
+    @Nullable
+    Object serialize(T value);
 }

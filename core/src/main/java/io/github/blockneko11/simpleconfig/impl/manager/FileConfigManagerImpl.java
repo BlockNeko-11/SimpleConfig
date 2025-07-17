@@ -1,6 +1,8 @@
 package io.github.blockneko11.simpleconfig.impl.manager;
 
 import io.github.blockneko11.simpleconfig.api.Config;
+import io.github.blockneko11.simpleconfig.api.adapter.parse.ConfigValueParser;
+import io.github.blockneko11.simpleconfig.api.adapter.serialize.ConfigValueSerializer;
 import io.github.blockneko11.simpleconfig.api.annotation.Alias;
 import io.github.blockneko11.simpleconfig.api.annotation.Comment;
 import io.github.blockneko11.simpleconfig.api.annotation.Ignore;
@@ -85,14 +87,16 @@ public class FileConfigManagerImpl<T extends Config>
                 continue;
             }
 
-            Object value;
+
             Alias alias = f.getAnnotation(Alias.class);
+            String key;
             if (alias != null) {
-                value = map.get(alias.value());
+                key = alias.value();
             } else {
-                value = map.get(f.getName());
+                key = f.getName();
             }
 
+            Object value = map.get(key);
             ConfigHolder<?> object = (ConfigHolder<?>) f.get(instance);
             Class<?> valueClass = object.getClazz();
 
@@ -136,7 +140,15 @@ public class FileConfigManagerImpl<T extends Config>
                 continue;
             }
 
-            ((ConfigHolder<Object>) object).set(fromMap(valueClass, (Map<String, Object>) value));
+            ConfigValueParser<Object> parser = ((ConfigHolder<Object>) object).getParser();
+            if (parser != null) {
+                ((ConfigHolder<Object>) object).set(parser.parse(value));
+                continue;
+            }
+
+            throw new IllegalArgumentException("unable to parse value for " + key);
+
+//            ((ConfigHolder<Object>) object).set(fromMap(valueClass, (Map<String, Object>) value));
         }
 
         return instance;
@@ -177,11 +189,11 @@ public class FileConfigManagerImpl<T extends Config>
             }
 
             Alias alias = f.getAnnotation(Alias.class);
-            String name;
+            String key;
             if (alias != null) {
-                name = alias.value();
+                key = alias.value();
             } else {
-                name = f.getName();
+                key = f.getName();
             }
 
             ConfigHolder<?> object = (ConfigHolder<?>) f.get(config);
@@ -189,41 +201,47 @@ public class FileConfigManagerImpl<T extends Config>
             Object value = object.get();
 
             if (value == null) {
-                map.put(name, null);
+                map.put(key, null);
                 continue;
             }
 
             if (valueClass == Boolean.class) {
-                map.put(name, ((BooleanConfigHolder) object).get());
+                map.put(key, ((BooleanConfigHolder) object).get());
                 continue;
             }
 
             if (valueClass == Integer.class) {
-                map.put(name, ((IntegerConfigHolder) object).get());
+                map.put(key, ((IntegerConfigHolder) object).get());
                 continue;
             }
 
             if (valueClass == Double.class) {
-                map.put(name, ((DoubleConfigHolder) object).get());
+                map.put(key, ((DoubleConfigHolder) object).get());
                 continue;
             }
 
             if (valueClass == String.class) {
-                map.put(name, ((ConfigHolder<String>) object).get());
+                map.put(key, ((ConfigHolder<String>) object).get());
                 continue;
             }
 
             if (valueClass == List.class) {
-                map.put(name, ((ListConfigHolder) object).get());
+                map.put(key, ((ListConfigHolder) object).get());
                 continue;
             }
 
             if (valueClass == Map.class) {
-                map.put(name, ((MapConfigHolder) object).get());
+                map.put(key, ((MapConfigHolder) object).get());
                 continue;
             }
 
-            map.put(name, toMap(value));
+            ConfigValueSerializer<Object> serializer = ((ConfigHolder<Object>) object).getSerializer();
+            if (serializer != null) {
+                map.put(key, serializer.serialize(((ConfigHolder<Object>) object).get()));
+                continue;
+            }
+
+            throw new IllegalArgumentException("unable to serialize value for " + key);
         }
 
         return map;
