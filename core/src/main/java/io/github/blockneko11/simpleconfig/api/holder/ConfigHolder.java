@@ -80,10 +80,6 @@ public interface ConfigHolder<T> {
         return this.get() == this.getDefaults();
     }
 
-    default void reset() {
-        this.set(this.getDefaults());
-    }
-
     /**
      * 获取配置项的值，并映射为另一个类型。
      * @param mapper 映射函数

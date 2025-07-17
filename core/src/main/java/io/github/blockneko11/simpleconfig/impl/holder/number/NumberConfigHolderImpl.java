@@ -39,10 +39,6 @@ public abstract class NumberConfigHolderImpl<N extends Number> extends ConfigHol
     public N getDefaults() {
         N defaults = super.getDefaults();
 
-        if (defaults == null) {
-            throw new IllegalArgumentException("defaults cannot be null");
-        }
-
         if (!this.isInRange(defaults)) {
             throw new IllegalArgumentException("defaults is out of range");
         }
@@ -53,11 +49,6 @@ public abstract class NumberConfigHolderImpl<N extends Number> extends ConfigHol
     @Override
     public void set(@Nullable N value) {
         N defaults = this.getDefaults();
-
-        if (value == null) {
-            super.set(defaults);
-            return;
-        }
 
         if (!this.isInRange(value)) {
             super.set(defaults);

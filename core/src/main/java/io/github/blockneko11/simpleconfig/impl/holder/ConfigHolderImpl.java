@@ -43,7 +43,7 @@ public class ConfigHolderImpl<T> implements ConfigHolder<T> {
     @Override
     public T get() {
         if (this.value == null) {
-            this.reset();
+            this.set(null);
         }
 
         return this.value;
@@ -57,7 +57,7 @@ public class ConfigHolderImpl<T> implements ConfigHolder<T> {
 
     public void set(@Nullable T value) {
         if (value == null) {
-            this.reset();
+            this.value = this.getDefaults();
             return;
         }
 

@@ -34,66 +34,66 @@ public interface MapConfigHolder<K, V> extends ConfigHolder<Map<K, V>>, Map<K, V
 
     @Override
     default int size() {
-        return get().size();
+        return this.get().size();
     }
 
     @Override
     default boolean isEmpty() {
-        return get().isEmpty();
+        return this.get().isEmpty();
     }
 
     @Override
     default boolean containsKey(Object key) {
-        return get().containsKey(key);
+        return this.get().containsKey(key);
     }
 
     @Override
     default boolean containsValue(Object value) {
-        return get().containsValue(value);
+        return this.get().containsValue(value);
     }
 
     @Override
     default V get(Object key) {
-        return get().get(key);
+        return this.get().get(key);
     }
 
     @Nullable
     @Override
     default V put(K key, V value) {
-        return get().put(key, value);
+        return this.get().put(key, value);
     }
 
     @Override
     default V remove(Object key) {
-        return get().remove(key);
+        return this.get().remove(key);
     }
 
     @Override
     default void putAll(@NotNull Map<? extends K, ? extends V> m) {
-        get().putAll(m);
+        this.get().putAll(m);
     }
 
     @Override
     default void clear() {
-        get().clear();
+        this.get().clear();
     }
 
     @NotNull
     @Override
     default Set<K> keySet() {
-        return get().keySet();
+        return this.get().keySet();
     }
 
     @NotNull
     @Override
     default Collection<V> values() {
-        return get().values();
+        return this.get().values();
     }
 
     @NotNull
     @Override
     default Set<Entry<K, V>> entrySet() {
-        return get().entrySet();
+        return this.get().entrySet();
     }
 
     /**
