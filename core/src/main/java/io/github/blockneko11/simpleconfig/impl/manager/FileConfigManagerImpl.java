@@ -22,7 +22,9 @@ import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-public class FileConfigManagerImpl<T extends Config> extends AbstractConfigManager<T> implements FileConfigManager<T> {
+public class FileConfigManagerImpl<T extends Config>
+        extends AbstractConfigManager<T>
+        implements FileConfigManager<T> {
     private final ConfigProvider provider;
     private final File file;
 
