@@ -57,9 +57,14 @@ public abstract class NumberConfigHolderImpl<N extends Number> extends ConfigHol
         super.set(value);
     }
 
-    public static abstract class Builder<N extends Number>
-            extends BuilderImpl<N, NumberConfigHolder<N>, NumberConfigHolder.Builder<N>>
-            implements NumberConfigHolder.Builder<N> {
+    public static abstract class Builder<
+            N extends Number,
+            Result extends NumberConfigHolder<N>,
+            Impl extends NumberConfigHolder.Builder<N, Result, Impl>
+            >
+            extends BuilderImpl<N, Result, Impl>
+            implements NumberConfigHolder.Builder<N, Result, Impl> {
+
         private final NumberConfigHolderConstructor<N> constructor;
         protected N min;
         protected N max;
@@ -75,20 +80,20 @@ public abstract class NumberConfigHolderImpl<N extends Number> extends ConfigHol
         }
 
         @Override
-        public Builder<N> min(@NotNull N min) {
+        public Impl min(@NotNull N min) {
             this.min = min;
-            return this;
+            return (Impl) this;
         }
 
         @Override
-        public Builder<N> max(@NotNull N max) {
+        public Impl max(@NotNull N max) {
             this.max = max;
-            return this;
+            return (Impl) this;
         }
 
         @Override
-        public NumberConfigHolder<N> build() {
-            return this.constructor.create(defaults, this.min, this.max);
+        public Result build() {
+            return (Result) this.constructor.create(defaults, this.min, this.max);
         }
     }
 }

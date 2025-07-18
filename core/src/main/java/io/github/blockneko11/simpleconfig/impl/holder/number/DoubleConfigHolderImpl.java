@@ -15,35 +15,11 @@ public class DoubleConfigHolderImpl extends NumberConfigHolderImpl<Double> imple
         return value >= this.getMin() && value <= this.getMax();
     }
 
-    public static class Builder extends NumberConfigHolderImpl.Builder<Double> implements DoubleConfigHolder.Builder {
+    public static class Builder
+            extends NumberConfigHolderImpl.Builder<Double, DoubleConfigHolder, DoubleConfigHolder.Builder>
+            implements DoubleConfigHolder.Builder {
         public Builder() {
             super(DoubleConfigHolderImpl::new, Double.MIN_VALUE, Double.MAX_VALUE, () -> 0.0D);
-        }
-
-        @Override
-        public Builder min(@NotNull Double min) {
-            return (Builder) super.min(min);
-        }
-
-        @Override
-        public Builder max(@NotNull Double max) {
-            return (Builder) super.max(max);
-        }
-
-        @Override
-        public Builder defaults(Double defaults) {
-            return (Builder) super.defaults(defaults);
-        }
-
-        @Override
-        public Builder defaults(@NotNull Supplier<Double> defaults) {
-            return (Builder) super.defaults(defaults);
-        }
-
-        @NotNull
-        @Override
-        public DoubleConfigHolder build() {
-            return (DoubleConfigHolder) super.build();
         }
     }
 }

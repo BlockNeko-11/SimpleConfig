@@ -42,8 +42,6 @@ public class Toml4JCommentedConfigProvider extends Toml4JConfigProvider implemen
             List<String> lines = comments.get(key);
             boolean hasAnyComments = (lines != null);
             if (hasAnyComments) {
-                sb.append("\n");
-
                 for (String line : lines) {
                     sb.append("# ").append(line).append("\n");
                 }
@@ -51,9 +49,7 @@ public class Toml4JCommentedConfigProvider extends Toml4JConfigProvider implemen
 
             Map<String, Object> map = Collections.singletonMap(key, value);
             sb.append(writer.write(map));
-            if (hasAnyComments) {
-                sb.append("\n");
-            }
+            sb.append("\n");
         }
 
         return sb.toString();

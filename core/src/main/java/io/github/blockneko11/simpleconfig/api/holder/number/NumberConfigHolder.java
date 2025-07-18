@@ -39,19 +39,24 @@ public interface NumberConfigHolder<N extends Number> extends ConfigHolder<N> {
      * @author BlockNeko-11
      * @since 1.0.0
      */
-    interface Builder<N extends Number> extends ConfigHolder.Builder<N, NumberConfigHolder<N>, Builder<N>> {
+    interface Builder<
+            N extends Number,
+            Result extends ConfigHolder<N>,
+            Impl extends Builder<N, Result, Impl>
+            >
+            extends ConfigHolder.Builder<N, Result, Impl> {
         /**
          * 设置数字的最小值限制。
          * @param min 最小值
          * @return 自身
          */
-        Builder<N> min(@NotNull N min);
+        Impl min(@NotNull N min);
 
         /**
          * 设置数字的最大值限制。
          * @param max 最大值
          * @return 自身
          */
-        Builder<N> max(@NotNull N max);
+        Impl max(@NotNull N max);
     }
 }
