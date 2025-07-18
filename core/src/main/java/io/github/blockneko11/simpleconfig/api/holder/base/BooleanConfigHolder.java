@@ -3,7 +3,6 @@ package io.github.blockneko11.simpleconfig.api.holder.base;
 import io.github.blockneko11.simpleconfig.api.holder.ConfigHolder;
 import io.github.blockneko11.simpleconfig.impl.holder.base.BooleanConfigHolderImpl;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
@@ -56,18 +55,8 @@ public interface BooleanConfigHolder extends ConfigHolder<Boolean> {
      * 表示一个创建布尔类型的配置项的构建器。
      * @see ConfigHolder.Builder
      * @author BlockNeko-11
-     * @since 1.0.0
+     * @since 1.1.0
      */
-    interface Builder extends ConfigHolder.Builder<Boolean> {
-        @Override
-        default Builder defaults(@Nullable Boolean defaults) {
-            return (Builder) ConfigHolder.Builder.super.defaults(defaults);
-        }
-
-        @Override
-        Builder defaults(@NotNull Supplier<Boolean> defaults);
-
-        @Override
-        BooleanConfigHolder build();
+    interface Builder extends ConfigHolder.Builder<Boolean, BooleanConfigHolder, Builder> {
     }
 }

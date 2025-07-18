@@ -6,14 +6,15 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
-public class ConfigHolderImpl<T> implements ConfigHolder<T> {
+public abstract class ConfigHolderImpl<T> implements ConfigHolder<T> {
     private final Class<T> clazz;
     private final Supplier<T> defaults;
 
     @Nullable
     private T value;
 
-    protected ConfigHolderImpl(@NotNull Class<T> clazz, @NotNull Supplier<T> defaults) {
+    protected ConfigHolderImpl(@NotNull Class<T> clazz,
+                               @NotNull Supplier<T> defaults) {
         this.clazz = clazz;
         this.defaults = defaults;
     }
@@ -24,51 +25,53 @@ public class ConfigHolderImpl<T> implements ConfigHolder<T> {
         return this.clazz;
     }
 
-    @Override
-    public T getDefaults() {
-        return this.defaults.get();
-    }
-
-    @Nullable
+    @NotNull
     @Override
     public T get() {
         if (this.value == null) {
-            T def = this.getDefaults();
-            if (def == null) {
-                throw new IllegalArgumentException("default value is null");
-            }
-
-            this.set(def);
+            this.set(null);
         }
 
         return this.value;
     }
 
+    @NotNull
+    @Override
+    public T getDefaults() {
+        T def = this.defaults.get();
+        if (def == null) {
+            throw new IllegalArgumentException("default value cannot be null");
+        }
+
+        return def;
+    }
+
     public void set(@Nullable T value) {
+        if (value == null) {
+            this.value = this.getDefaults();
+            return;
+        }
+
         this.value = value;
     }
 
-    public static class Builder<T> extends AbstractBuilder<T> implements ConfigHolder.Builder<T> {
-        private final Class<T> clazz;
+    public abstract static class BuilderImpl<
+            T,
+            Result extends ConfigHolder<T>,
+            Impl extends Builder<T, Result, Impl>
+            >
+            implements Builder<T, Result, Impl> {
 
-        public Builder(@NotNull Class<T> clazz) {
-            super(() -> null);
-            this.clazz = clazz;
+        protected Supplier<T> defaults;
+
+        protected BuilderImpl(@NotNull Supplier<T> defaults) {
+            this.defaults = defaults;
         }
 
         @Override
-        public Builder<T> defaults(T defaults) {
-            return (Builder<T>) super.defaults(defaults);
-        }
-
-        @Override
-        public Builder<T> defaults(@NotNull Supplier<T> defaults) {
-            return (Builder<T>) super.defaults(defaults);
-        }
-
-        @Override
-        public ConfigHolder<T> build() {
-            return new ConfigHolderImpl<>(this.clazz, defaults);
+        public Impl defaults(@NotNull Supplier<T> defaults) {
+            this.defaults = defaults;
+            return (Impl) this;
         }
     }
 }

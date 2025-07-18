@@ -2,7 +2,6 @@ package io.github.blockneko11.simpleconfig.api.holder.number;
 
 import io.github.blockneko11.simpleconfig.impl.holder.number.IntegerConfigHolderImpl;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
@@ -55,24 +54,8 @@ public interface IntegerConfigHolder extends NumberConfigHolder<Integer> {
      * 表示一个创建整型的配置项的构建器。
      * @see NumberConfigHolder.Builder
      * @author BlockNeko-11
-     * @since 1.0.0
+     * @since 1.1.0
      */
-    interface Builder extends NumberConfigHolder.Builder<Integer> {
-        @Override
-        default Builder defaults(@Nullable Integer defaults) {
-            return (Builder) NumberConfigHolder.Builder.super.defaults(defaults);
-        }
-
-        @Override
-        Builder defaults(@NotNull Supplier<Integer> defaults);
-
-        @Override
-        Builder min(@NotNull Integer min);
-
-        @Override
-        Builder max(@NotNull Integer max);
-
-        @Override
-        IntegerConfigHolder build();
+    interface Builder extends NumberConfigHolder.Builder<Integer, IntegerConfigHolder, Builder> {
     }
 }

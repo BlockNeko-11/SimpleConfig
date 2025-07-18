@@ -1,9 +1,12 @@
 package io.github.blockneko11.simpleconfig.impl.manager;
 
 import io.github.blockneko11.simpleconfig.api.Config;
+import io.github.blockneko11.simpleconfig.api.adapter.parse.ConfigValueParser;
+import io.github.blockneko11.simpleconfig.api.adapter.serialize.ConfigValueSerializer;
 import io.github.blockneko11.simpleconfig.api.annotation.Alias;
 import io.github.blockneko11.simpleconfig.api.annotation.Comment;
 import io.github.blockneko11.simpleconfig.api.annotation.Ignore;
+import io.github.blockneko11.simpleconfig.api.holder.base.ObjectConfigHolder;
 import io.github.blockneko11.simpleconfig.api.holder.collection.ListConfigHolder;
 import io.github.blockneko11.simpleconfig.api.holder.collection.MapConfigHolder;
 import io.github.blockneko11.simpleconfig.api.holder.number.LongConfigHolder;
@@ -12,7 +15,7 @@ import io.github.blockneko11.simpleconfig.api.holder.ConfigHolder;
 import io.github.blockneko11.simpleconfig.api.holder.number.DoubleConfigHolder;
 import io.github.blockneko11.simpleconfig.api.holder.number.IntegerConfigHolder;
 import io.github.blockneko11.simpleconfig.api.holder.base.BooleanConfigHolder;
-import io.github.blockneko11.simpleconfig.api.provider.CommentConfigProvider;
+import io.github.blockneko11.simpleconfig.api.provider.CommentedConfigProvider;
 import io.github.blockneko11.simpleconfig.api.provider.ConfigProvider;
 import io.github.blockneko11.simpleconfig.util.reflect.ReflectUtil;
 import org.jetbrains.annotations.NotNull;
@@ -22,7 +25,9 @@ import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-public class FileConfigManagerImpl<T extends Config> extends AbstractConfigManager<T> implements FileConfigManager<T> {
+public class FileConfigManagerImpl<T extends Config>
+        extends ConfigManagerImpl<T>
+        implements FileConfigManager<T> {
     private final ConfigProvider provider;
     private final File file;
 
@@ -83,14 +88,16 @@ public class FileConfigManagerImpl<T extends Config> extends AbstractConfigManag
                 continue;
             }
 
-            Object value;
+
             Alias alias = f.getAnnotation(Alias.class);
+            String key;
             if (alias != null) {
-                value = map.get(alias.value());
+                key = alias.value();
             } else {
-                value = map.get(f.getName());
+                key = f.getName();
             }
 
+            Object value = map.get(key);
             ConfigHolder<?> object = (ConfigHolder<?>) f.get(instance);
             Class<?> valueClass = object.getClazz();
 
@@ -119,11 +126,6 @@ public class FileConfigManagerImpl<T extends Config> extends AbstractConfigManag
                 continue;
             }
 
-            if (valueClass == String.class) {
-                ((ConfigHolder<String>) object).set((String) value);
-                continue;
-            }
-
             if (valueClass == List.class) {
                 ((ListConfigHolder<Object>) object).set((List<Object>) value);
                 continue;
@@ -134,7 +136,15 @@ public class FileConfigManagerImpl<T extends Config> extends AbstractConfigManag
                 continue;
             }
 
-            ((ConfigHolder<Object>) object).set(fromMap(valueClass, (Map<String, Object>) value));
+            if (valueClass == String.class) {
+                ((ObjectConfigHolder<String>) object).set((String) value);
+                continue;
+            }
+
+            ConfigValueParser<Object> parser = ((ObjectConfigHolder<Object>) object).getParser();
+            ((ObjectConfigHolder<Object>) object).set(parser.parse(value));
+
+            // ((ConfigHolder<Object>) object).set(fromMap(valueClass, (Map<String, Object>) value));
         }
 
         return instance;
@@ -144,8 +154,8 @@ public class FileConfigManagerImpl<T extends Config> extends AbstractConfigManag
     public void save() throws IOException, ReflectiveOperationException {
         Map<String, Object> config = toMap(get());
         String serialized;
-        if (this.provider instanceof CommentConfigProvider) {
-            serialized = ((CommentConfigProvider) this.provider).serialize(config, getComments(get()));
+        if (this.provider instanceof CommentedConfigProvider) {
+            serialized = ((CommentedConfigProvider) this.provider).serialize(config, getComments(get()));
         } else {
             serialized = this.provider.serialize(config);
         }
@@ -175,11 +185,11 @@ public class FileConfigManagerImpl<T extends Config> extends AbstractConfigManag
             }
 
             Alias alias = f.getAnnotation(Alias.class);
-            String name;
+            String key;
             if (alias != null) {
-                name = alias.value();
+                key = alias.value();
             } else {
-                name = f.getName();
+                key = f.getName();
             }
 
             ConfigHolder<?> object = (ConfigHolder<?>) f.get(config);
@@ -187,41 +197,42 @@ public class FileConfigManagerImpl<T extends Config> extends AbstractConfigManag
             Object value = object.get();
 
             if (value == null) {
-                map.put(name, null);
+                map.put(key, null);
                 continue;
             }
 
             if (valueClass == Boolean.class) {
-                map.put(name, ((BooleanConfigHolder) object).get());
+                map.put(key, ((BooleanConfigHolder) object).get());
                 continue;
             }
 
             if (valueClass == Integer.class) {
-                map.put(name, ((IntegerConfigHolder) object).get());
+                map.put(key, ((IntegerConfigHolder) object).get());
                 continue;
             }
 
             if (valueClass == Double.class) {
-                map.put(name, ((DoubleConfigHolder) object).get());
-                continue;
-            }
-
-            if (valueClass == String.class) {
-                map.put(name, ((ConfigHolder<String>) object).get());
+                map.put(key, ((DoubleConfigHolder) object).get());
                 continue;
             }
 
             if (valueClass == List.class) {
-                map.put(name, ((ListConfigHolder) object).get());
+                map.put(key, ((ListConfigHolder) object).get());
                 continue;
             }
 
             if (valueClass == Map.class) {
-                map.put(name, ((MapConfigHolder) object).get());
+                map.put(key, ((MapConfigHolder) object).get());
                 continue;
             }
 
-            map.put(name, toMap(value));
+            if (valueClass == String.class) {
+                map.put(key, ((ObjectConfigHolder<String>) object).get());
+                continue;
+            }
+
+            ConfigValueSerializer<Object> serializer = ((ObjectConfigHolder<Object>) object).getSerializer();
+            map.put(key, serializer.serialize(((ObjectConfigHolder<Object>) object).get()));
         }
 
         return map;
@@ -273,7 +284,7 @@ public class FileConfigManagerImpl<T extends Config> extends AbstractConfigManag
     }
 
     public static class Builder<T extends Config>
-            extends AbstractConfigManager.Builder<T>
+            extends ConfigManagerImpl.Builder<T>
             implements FileConfigManager.Builder<T> {
         private File file;
         private ConfigProvider provider;

@@ -1,7 +1,6 @@
 package io.github.blockneko11.simpleconfig.impl.holder.collection;
 
 import io.github.blockneko11.simpleconfig.api.holder.collection.MapConfigHolder;
-import io.github.blockneko11.simpleconfig.impl.holder.AbstractBuilder;
 import io.github.blockneko11.simpleconfig.impl.holder.ConfigHolderImpl;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,7 +20,9 @@ public class MapConfigHolderImpl<K, V> extends ConfigHolderImpl<Map<K, V>> imple
         this.valueClass = valueClass;
     }
 
-    public static class Builder<K, V> extends AbstractBuilder<Map<K, V>> implements MapConfigHolder.Builder<K, V> {
+    public static class Builder<K, V>
+            extends BuilderImpl<Map<K, V>, MapConfigHolder<K, V>, MapConfigHolder.Builder<K, V>>
+            implements MapConfigHolder.Builder<K, V> {
         private final Class<K> keyClass;
         private final Class<V> valueClass;
 
@@ -29,16 +30,6 @@ public class MapConfigHolderImpl<K, V> extends ConfigHolderImpl<Map<K, V>> imple
             super(LinkedHashMap::new);
             this.keyClass = keyClass;
             this.valueClass = valueClass;
-        }
-
-        @Override
-        public Builder<K, V> defaults(Map<K, V> defaults) {
-            return (Builder<K, V>) super.defaults(defaults);
-        }
-
-        @Override
-        public Builder<K, V> defaults(@NotNull Supplier<Map<K, V>> defaults) {
-            return (Builder<K, V>) super.defaults(defaults);
         }
 
         @Override

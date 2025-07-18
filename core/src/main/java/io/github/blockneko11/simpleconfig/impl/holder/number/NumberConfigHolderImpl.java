@@ -2,7 +2,6 @@ package io.github.blockneko11.simpleconfig.impl.holder.number;
 
 import io.github.blockneko11.simpleconfig.api.holder.number.NumberConfigHolder;
 import io.github.blockneko11.simpleconfig.api.holder.number.NumberConfigHolderConstructor;
-import io.github.blockneko11.simpleconfig.impl.holder.AbstractBuilder;
 import io.github.blockneko11.simpleconfig.impl.holder.ConfigHolderImpl;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -37,29 +36,20 @@ public abstract class NumberConfigHolderImpl<N extends Number> extends ConfigHol
     @NotNull
     @Override
     public N getDefaults() {
-        N defaults = super.getDefaults();
+        N def = super.getDefaults();
 
-        if (defaults == null) {
-            throw new IllegalArgumentException("defaults cannot be null");
-        }
-
-        if (!this.isInRange(defaults)) {
+        if (!this.isInRange(def)) {
             throw new IllegalArgumentException("defaults is out of range");
         }
 
-        return defaults;
+        return def;
     }
 
     @Override
     public void set(@Nullable N value) {
         N defaults = this.getDefaults();
 
-        if (value == null) {
-            super.set(defaults);
-            return;
-        }
-
-        if (!this.isInRange(value)) {
+        if (value == null || !this.isInRange(value)) {
             super.set(defaults);
             return;
         }
@@ -67,7 +57,14 @@ public abstract class NumberConfigHolderImpl<N extends Number> extends ConfigHol
         super.set(value);
     }
 
-    public static abstract class Builder<N extends Number> extends AbstractBuilder<N> implements NumberConfigHolder.Builder<N> {
+    public static abstract class Builder<
+            N extends Number,
+            Result extends NumberConfigHolder<N>,
+            Impl extends NumberConfigHolder.Builder<N, Result, Impl>
+            >
+            extends BuilderImpl<N, Result, Impl>
+            implements NumberConfigHolder.Builder<N, Result, Impl> {
+
         private final NumberConfigHolderConstructor<N> constructor;
         protected N min;
         protected N max;
@@ -83,30 +80,20 @@ public abstract class NumberConfigHolderImpl<N extends Number> extends ConfigHol
         }
 
         @Override
-        public Builder<N> defaults(N defaults) {
-            return (Builder<N>) super.defaults(defaults);
-        }
-
-        @Override
-        public Builder<N> defaults(@NotNull Supplier<N> defaults) {
-            return (Builder<N>) super.defaults(defaults);
-        }
-
-        @Override
-        public Builder<N> min(@NotNull N min) {
+        public Impl min(@NotNull N min) {
             this.min = min;
-            return this;
+            return (Impl) this;
         }
 
         @Override
-        public Builder<N> max(@NotNull N max) {
+        public Impl max(@NotNull N max) {
             this.max = max;
-            return this;
+            return (Impl) this;
         }
 
         @Override
-        public NumberConfigHolder<N> build() {
-            return this.constructor.create(defaults, this.min, this.max);
+        public Result build() {
+            return (Result) this.constructor.create(defaults, this.min, this.max);
         }
     }
 }

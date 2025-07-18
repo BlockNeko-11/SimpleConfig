@@ -2,7 +2,6 @@ package io.github.blockneko11.simpleconfig.api.holder.number;
 
 import io.github.blockneko11.simpleconfig.impl.holder.number.LongConfigHolderImpl;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
@@ -55,24 +54,8 @@ public interface LongConfigHolder extends NumberConfigHolder<Long> {
      * 表示一个创建长整型（long）的配置项的构建器。
      * @see NumberConfigHolder.Builder
      * @author BlockNeko-11
-     * @since 1.0.0
+     * @since 1.1.0
      */
-    interface Builder extends NumberConfigHolder.Builder<Long> {
-        @Override
-        default Builder defaults(@Nullable Long defaults) {
-            return (Builder) NumberConfigHolder.Builder.super.defaults(defaults);
-        }
-
-        @Override
-        Builder defaults(@NotNull Supplier<Long> defaults);
-
-        @Override
-        Builder min(@NotNull Long min);
-
-        @Override
-        Builder max(@NotNull Long max);
-
-        @NotNull
-        LongConfigHolder build();
+    interface Builder extends NumberConfigHolder.Builder<Long, LongConfigHolder, Builder> {
     }
 }

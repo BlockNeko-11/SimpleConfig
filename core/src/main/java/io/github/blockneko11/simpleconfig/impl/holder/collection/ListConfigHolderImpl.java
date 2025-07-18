@@ -1,7 +1,6 @@
 package io.github.blockneko11.simpleconfig.impl.holder.collection;
 
 import io.github.blockneko11.simpleconfig.api.holder.collection.ListConfigHolder;
-import io.github.blockneko11.simpleconfig.impl.holder.AbstractBuilder;
 import io.github.blockneko11.simpleconfig.impl.holder.ConfigHolderImpl;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,22 +15,15 @@ public class ListConfigHolderImpl<E> extends ConfigHolderImpl<List<E>> implement
         this.elementClass = elementClass;
     }
 
-    public static class Builder<E> extends AbstractBuilder<List<E>> implements ListConfigHolder.Builder<E> {
+    public static class Builder<E>
+            extends BuilderImpl<List<E>, ListConfigHolder<E>, ListConfigHolder.Builder<E>>
+            implements ListConfigHolder.Builder<E> {
+
         private final Class<E> elementClass;
 
         public Builder(@NotNull Class<E> elementClass) {
             super(ArrayList::new);
             this.elementClass = elementClass;
-        }
-
-        @Override
-        public Builder<E> defaults(List<E> defaults) {
-            return (Builder<E>) super.defaults(defaults);
-        }
-
-        @Override
-        public Builder<E> defaults(@NotNull Supplier<List<E>> defaults) {
-            return (Builder<E>) super.defaults(defaults);
         }
 
         @Override

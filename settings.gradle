@@ -1,10 +1,10 @@
 def subprojectDirs = [
-        "core",
-        "gson",
-        "snake-yaml",
-        "toml4j",
-        "typesafe-config",
-        "example"
+        ":core",
+        ":example",
+        ":provider:gson",
+        ":provider:snake-yaml",
+        ":provider:toml4j",
+        ":provider:typesafe-config"
 ]
 
 subprojectDirs.each {
