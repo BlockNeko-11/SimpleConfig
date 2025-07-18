@@ -35,9 +35,11 @@ public interface NumberConfigHolder<N extends Number> extends ConfigHolder<N> {
     /**
      * 表示一个创建数字类型的配置项的构建器
      * @param <N> 数字类型
+     * @param <Result> 创建的配置项的类型
+     * @param <Impl> 构建器的实现类型
      * @see ConfigHolder.Builder
      * @author BlockNeko-11
-     * @since 1.0.0
+     * @since 1.1.0
      */
     interface Builder<
             N extends Number,

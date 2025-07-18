@@ -101,7 +101,7 @@ public interface MapConfigHolder<K, V> extends ConfigHolder<Map<K, V>>, Map<K, V
      * @param <V> {@link Map} 中值的类型
      * @see ConfigHolder.Builder
      * @author BlockNeko-11
-     * @since 1.0.0
+     * @since 1.1.0
      */
     interface Builder<K, V> extends ConfigHolder.Builder<Map<K, V>, MapConfigHolder<K, V>, Builder<K, V>> {
     }

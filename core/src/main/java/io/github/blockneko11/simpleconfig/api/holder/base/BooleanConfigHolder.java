@@ -55,7 +55,7 @@ public interface BooleanConfigHolder extends ConfigHolder<Boolean> {
      * 表示一个创建布尔类型的配置项的构建器。
      * @see ConfigHolder.Builder
      * @author BlockNeko-11
-     * @since 1.0.0
+     * @since 1.1.0
      */
     interface Builder extends ConfigHolder.Builder<Boolean, BooleanConfigHolder, Builder> {
     }

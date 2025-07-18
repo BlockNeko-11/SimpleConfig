@@ -154,7 +154,7 @@ public interface ListConfigHolder<E> extends ConfigHolder<List<E>>, List<E> {
      * @param <E> {@link List} 中元素的类型
      * @see ConfigHolder.Builder
      * @author BlockNeko-11
-     * @since 1.0.0
+     * @since 1.1.0
      */
     interface Builder<E> extends ConfigHolder.Builder<List<E>, ListConfigHolder<E>, Builder<E>> {
     }
