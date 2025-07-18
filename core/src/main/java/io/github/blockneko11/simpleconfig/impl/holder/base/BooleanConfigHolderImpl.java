@@ -31,7 +31,7 @@ public class BooleanConfigHolderImpl extends ConfigHolderImpl<Boolean> implement
         @NotNull
         @Override
         public BooleanConfigHolder build() {
-            return new BooleanConfigHolderImpl(defaults);
+            return new BooleanConfigHolderImpl(super.defaults);
         }
     }
 }

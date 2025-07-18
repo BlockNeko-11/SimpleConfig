@@ -1,5 +1,6 @@
 package io.github.blockneko11.simpleconfig.impl.holder.base;
 
+import io.github.blockneko11.simpleconfig.api.adapter.ConfigValueAdapter;
 import io.github.blockneko11.simpleconfig.api.adapter.parse.ConfigValueParser;
 import io.github.blockneko11.simpleconfig.api.adapter.serialize.ConfigValueSerializer;
 import io.github.blockneko11.simpleconfig.api.holder.base.ObjectConfigHolder;
@@ -24,6 +25,12 @@ public class ObjectConfigHolderImpl<T>
         this.serializer = serializer;
     }
 
+    protected ObjectConfigHolderImpl(@NotNull Class<T> clazz,
+                                     @NotNull Supplier<T> defaults,
+                                     @NotNull ConfigValueAdapter<T> adapter) {
+        this(clazz, defaults, adapter, adapter);
+    }
+
     @NotNull
     @Override
     public ConfigValueParser<T> getParser() {
@@ -40,12 +47,16 @@ public class ObjectConfigHolderImpl<T>
             extends ConfigHolderImpl.BuilderImpl<T, ObjectConfigHolder<T>, ObjectConfigHolder.Builder<T>>
             implements ObjectConfigHolder.Builder<T> {
 
-        private final Class<T> clazz;
+        protected final Class<T> clazz;
         private ConfigValueParser<T> parser;
         private ConfigValueSerializer<T> serializer;
 
         public Builder(@NotNull Class<T> clazz) {
-            super(() -> null);
+            this(clazz, () -> null);
+        }
+
+        protected Builder(@NotNull Class<T> clazz, @NotNull Supplier<T> defaults) {
+            super(defaults);
             this.clazz = clazz;
         }
 

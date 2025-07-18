@@ -36,13 +36,13 @@ public abstract class NumberConfigHolderImpl<N extends Number> extends ConfigHol
     @NotNull
     @Override
     public N getDefaults() {
-        N defaults = super.getDefaults();
+        N def = super.getDefaults();
 
-        if (!this.isInRange(defaults)) {
+        if (!this.isInRange(def)) {
             throw new IllegalArgumentException("defaults is out of range");
         }
 
-        return defaults;
+        return def;
     }
 
     @Override

@@ -38,7 +38,12 @@ public abstract class ConfigHolderImpl<T> implements ConfigHolder<T> {
     @NotNull
     @Override
     public T getDefaults() {
-        return this.defaults.get();
+        T def = this.defaults.get();
+        if (def == null) {
+            throw new IllegalArgumentException("default value cannot be null");
+        }
+
+        return def;
     }
 
     public void set(@Nullable T value) {
