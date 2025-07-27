@@ -30,7 +30,7 @@ subprojects {
         compileOnly "org.jetbrains:annotations:26.0.2"
         annotationProcessor(compileOnly("org.projectlombok:lombok:1.18.36"))
 
-        testImplementation platform("org.junit:junit-bom:5.11.4")
+        testImplementation platform("org.junit:junit-bom:5.13.4")
         testImplementation "org.junit.jupiter:junit-jupiter"
         testAnnotationProcessor(testCompileOnly("org.projectlombok:lombok:1.18.36"))
     }
